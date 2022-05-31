@@ -1,0 +1,38 @@
+{
+  "name": "spritesheet-game",
+  "version": "1.0.2",
+  "description": "Spritesheet generator,Supported PIXI.js Cocos2d Easel.js Egret ...",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "spritesheet-game": "./bin/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevinchen2046/spritesheet-game.git"
+  },
+  "keywords": [
+    "spritesheet",
+    "texture",
+    "game",
+    "pixi.js",
+    "cocos2d",
+    "easel.js",
+    "egret"
+  ],
+  "author": "kevin.chen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kevinchen2046/spritesheet-game/issues"
+  },
+  "homepage": "https://github.com/kevinchen2046/spritesheet-game#readme",
+  "dependencies": {
+    "binpacking": "^0.0.1",
+    "glob": "^8.0.3",
+    "mustache": "^4.2.0",
+    "optimist": "^0.6.1",
+    "pngjs": "^6.0.0"
+  }
+}
