@@ -96,5 +96,5 @@ if (argv._.length == 0) {
     optimist.showHelp();
 } else {
     let Generator=require("../index");
-    new Generator(argv._, argv).exec();
+    new Generator().exec(argv._, argv);
 }

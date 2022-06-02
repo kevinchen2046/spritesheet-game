@@ -1,6 +1,6 @@
 # spritesheet-game
 
-Spritesheet generator,Supported PIXI.js Cocos2d Easel.js Egret ...
+spritesheet generator without environment dependencies,Supported PIXI.js Cocos2d Easel.js Egret ...
 
 `spritesheet-game` is a non environment version of `spritesheet-js`. 
 `pngjs` is the only dependency of bitmap,`spritesheet-game` as same supports the command-line.
