@@ -4,15 +4,16 @@ Spritesheet generator,Supported PIXI.js Cocos2d Easel.js Egret ...
 
 `spritesheet-game` is a non environment version of `spritesheet-js`. 
 `pngjs` is the only dependency of bitmap,`spritesheet-game` as same supports the command-line.
-But,The difference is that `--trim` is not supported.
+
+    ! new features - remove repeat textures
 
 ### Supported spritesheet formats ###
-* Starling / Sparrow
 * JSON (i.e. PIXI.js)
 * Easel.js
 * cocos2d (i.e. version 2.x)
 * cocos2d-v3 (i.e. version 3.x) 
-* CSS (new!)
+* CSS 
+* Starling / Sparrow (templates not adapted)
 
 ### Usage ###
 1. **Command Line**
@@ -30,6 +31,7 @@ But,The difference is that `--trim` is not supported.
     -p, --path    path to export directory                                                                                                             [default: "."]
     --fullpath    include path in file name                                                                                                            [default: false]
     --prefix      prefix for image paths (css format only)                                                                                             [default: ""]
+    --trim        removes transparent whitespaces around images                                                                                        [default: false]
     --square      texture should be s square                                                                                                           [default: false]
     --powerOfTwo  texture width and height should be power of two                                                                                      [default: false]
     --validate    check algorihtm returned data                                                                                                        [default: false]
@@ -40,15 +42,15 @@ But,The difference is that `--trim` is not supported.
     --scale       percentage scale                                                                                                                     [default: "100%"]
 
     ```
+
 2. **Node.js**
     ```javascript
     let SpriteSheet = require('spritesheet-game');
     
-    new SpriteSheet('assets/*.png', {format: 'json'}).exec().then(()=>{
+    new SpriteSheet().exec('assets/*.png', {format: 'pixi.js',trim:true,padding:2}).then(()=>{
         console.log('spritesheet successfully generated');
     });
     ```
-
 
 ### Installation ###
 

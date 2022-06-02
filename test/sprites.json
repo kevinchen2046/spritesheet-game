@@ -1,0 +1,73 @@
+{
+	"meta": {
+		"image": "sprites.png",
+		"size": {"w":166,"h":162},
+		"scale": "1"
+	},
+	"frames": {
+		"wind_strong0010 - 副本.png":
+		{
+			"frame": {"x":10,"y":10,"w":78,"h":75},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {"x":37,"y":25,"w":152,"h":125},
+			"sourceSize": {"w":152,"h":125}
+		},
+		"wind_strong0010.png":
+		{
+			"frame": {"x":10,"y":10,"w":78,"h":75},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {"x":37,"y":25,"w":152,"h":125},
+			"sourceSize": {"w":152,"h":125}
+		},
+		"wind_strong0016 - 副本.png":
+		{
+			"frame": {"x":108,"y":10,"w":48,"h":49},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {"x":52,"y":38,"w":152,"h":125},
+			"sourceSize": {"w":152,"h":125}
+		},
+		"wind_strong0016.png":
+		{
+			"frame": {"x":108,"y":10,"w":48,"h":49},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {"x":52,"y":38,"w":152,"h":125},
+			"sourceSize": {"w":152,"h":125}
+		},
+		"wind_strong0014 - 副本.png":
+		{
+			"frame": {"x":10,"y":105,"w":48,"h":47},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {"x":52,"y":39,"w":152,"h":125},
+			"sourceSize": {"w":152,"h":125}
+		},
+		"wind_strong0014.png":
+		{
+			"frame": {"x":10,"y":105,"w":48,"h":47},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {"x":52,"y":39,"w":152,"h":125},
+			"sourceSize": {"w":152,"h":125}
+		},
+		"wind_strong0018 - 副本.png":
+		{
+			"frame": {"x":78,"y":105,"w":44,"h":41},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {"x":54,"y":42,"w":152,"h":125},
+			"sourceSize": {"w":152,"h":125}
+		},
+		"wind_strong0018.png":
+		{
+			"frame": {"x":78,"y":105,"w":44,"h":41},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {"x":54,"y":42,"w":152,"h":125},
+			"sourceSize": {"w":152,"h":125}
+		}
+	}
+}

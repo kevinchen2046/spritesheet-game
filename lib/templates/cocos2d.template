@@ -14,9 +14,9 @@
             <key>rotated</key>
             <false/>
             <key>sourceColorRect</key>
-            <string>{{<%trim.x%>,<%trim.y%>},{<%trim.width%>,<%trim.height%>}}</string>
+            <string>{{<%trim.x%>,<%trim.y%>},{<%realwidth%>,<%realheight%>}}</string>
             <key>sourceSize</key>
-            <string>{<%trim.width%>,<%trim.height%>}</string>
+            <string>{<%realwidth%>,<%realheight%>}</string>
         <%/trimmed%>
         <%^trimmed%>
             <key><%name%><%extension%></key>

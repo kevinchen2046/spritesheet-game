@@ -18,11 +18,11 @@
             		<key>textureRotated</key>
             		<false/>
             		<key>sourceColorRect</key>
-            		<string>{{<%trim.x%>,<%trim.y%>},{<%trim.width%>,<%trim.height%>}}</string>
+            		<string>{{<%trim.x%>,<%trim.y%>},{<%realwidth%>,<%realheight%>}}</string>
             		<key>spriteSourceSize</key>
-            		<string>{<%width%>,<%height%>}</string>
+            		<string>{<%realwidth%>,<%realheight%>}</string>
 			<key>spriteSize</key>
-			<string>{<%trim.width%>,<%trim.height%>}</string>
+			<string>{<%realwidth%>,<%trim.height%>}</string>
 		</dict>
         	<%/trimmed%>
         	<%^trimmed%>

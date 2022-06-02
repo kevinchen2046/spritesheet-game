@@ -22,8 +22,8 @@ frames:
             w: {{width}}
             h: {{height}}
         sourceSize: 
-            w: {{trim.width}}
-            h: {{trim.height}}
+            w: {{realwidth}}
+            h: {{realheight}}
     {{/trimmed}}
     {{^trimmed}}
         frame: 

@@ -13,7 +13,7 @@
 			"rotated": false,
 			"trimmed": true,
 			"spriteSourceSize": {"x":{{trim.x}},"y":{{trim.y}},"w":{{width}},"h":{{height}}},
-			"sourceSize": {"w":{{trim.width}},"h":{{trim.height}}}
+			"sourceSize": {"w":{{realwidth}},"h":{{realheight}}}
 		{{/trimmed}}
 		{{^trimmed}}
 			"filename": "{{{name}}}{{extension}}",

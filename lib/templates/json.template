@@ -12,8 +12,8 @@
 			"frame": {"x":{{x}},"y":{{y}},"w":{{width}},"h":{{height}}},
 			"rotated": false,
 			"trimmed": true,
-			"spriteSourceSize": {"x":{{trim.x}},"y":{{trim.y}},"w":{{width}},"h":{{height}}},
-			"sourceSize": {"w":{{trim.width}},"h":{{trim.height}}}
+			"spriteSourceSize": {"x":{{trim.x}},"y":{{trim.y}},"w":{{realwidth}},"h":{{realheight}}},
+			"sourceSize": {"w":{{realwidth}},"h":{{realheight}}}
 		{{/trimmed}}
 		{{^trimmed}}
 			"frame": {"x":{{x}},"y":{{y}},"w":{{width}},"h":{{height}}},

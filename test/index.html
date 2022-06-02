@@ -1,0 +1,31 @@
+<head>
+    <script src="https://pixijs.download/release/pixi.js"></script>
+</head>
+
+<body>
+    <script>
+        const app = new PIXI.Application();
+        document.body.appendChild(app.view);
+
+        app.stop();
+
+        app.loader
+            .add('spritesheet', 'sprites.json')
+            .load(onAssetsLoaded);
+
+        function onAssetsLoaded() {
+            // create an array to store the textures
+        
+            let i;
+            let spritesheet=app.loader.resources["spritesheet"].data;
+            for (let name in spritesheet.frames) {
+                const texture = PIXI.Texture.from(name);
+                const sprite=PIXI.Sprite.from(texture);
+                app.stage.addChild(sprite);
+            }
+            // start animating
+            app.start();
+        }
+
+    </script>
+</body>
