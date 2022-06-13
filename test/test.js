@@ -31,4 +31,3 @@ generator.exec("./images/*.png",{name:"sprites",trim:true,padding:10});
 //         });
 //     });
 // });
-
