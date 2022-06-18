@@ -5,7 +5,8 @@ spritesheet generator without environment dependencies,Supported PIXI.js Cocos2d
 `spritesheet-game` is a non environment version of `spritesheet-js`. 
 `pngjs` is the only dependency of bitmap,`spritesheet-game` as same supports the command-line.
 
-    ! new features - remove repeat textures
+    ! new features - remove repeat textures.
+    ! new features - pixel edge ext,fixed the gap problem when tiling.
 
 ### Supported spritesheet formats ###
 * JSON (i.e. PIXI.js)
@@ -39,6 +40,8 @@ spritesheet generator without environment dependencies,Supported PIXI.js Cocos2d
     --width       width for binpacking                                                                                                                 [default: undefined]
     --height      height for binpacking                                                                                                                [default: undefined]
     --padding     padding between images in spritesheet                                                                                                [default: 0]
+    --pixeledge   pixel edge ext,its useful when use tiling that need fixed the gap problem                                                           
+    [default: 0]
     --scale       percentage scale                                                                                                                     [default: "100%"]
 
     ```

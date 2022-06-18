@@ -1,73 +1,41 @@
 {
 	"meta": {
 		"image": "sprites.png",
-		"size": {"w":166,"h":162},
+		"size": {"w":430,"h":427},
 		"scale": "1"
 	},
 	"frames": {
-		"wind_strong0010 - 副本.png":
+		"grasses.png":
 		{
-			"frame": {"x":10,"y":10,"w":78,"h":75},
+			"frame": {"x":280,"y":60,"w":90,"h":68},
 			"rotated": false,
-			"trimmed": true,
-			"spriteSourceSize": {"x":37,"y":25,"w":152,"h":125},
-			"sourceSize": {"w":152,"h":125}
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":90,"h":68},
+			"sourceSize": {"w":90,"h":68}
 		},
-		"wind_strong0010.png":
+		"mine_back.png":
 		{
-			"frame": {"x":10,"y":10,"w":78,"h":75},
+			"frame": {"x":60,"y":60,"w":100,"h":120},
 			"rotated": false,
-			"trimmed": true,
-			"spriteSourceSize": {"x":37,"y":25,"w":152,"h":125},
-			"sourceSize": {"w":152,"h":125}
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":100,"h":120},
+			"sourceSize": {"w":100,"h":120}
 		},
-		"wind_strong0016 - 副本.png":
+		"sky1.png":
 		{
-			"frame": {"x":108,"y":10,"w":48,"h":49},
+			"frame": {"x":247,"y":300,"w":64,"h":64},
 			"rotated": false,
-			"trimmed": true,
-			"spriteSourceSize": {"x":52,"y":38,"w":152,"h":125},
-			"sourceSize": {"w":152,"h":125}
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+			"sourceSize": {"w":64,"h":64}
 		},
-		"wind_strong0016.png":
+		"ui_lock.png":
 		{
-			"frame": {"x":108,"y":10,"w":48,"h":49},
+			"frame": {"x":60,"y":300,"w":67,"h":67},
 			"rotated": false,
-			"trimmed": true,
-			"spriteSourceSize": {"x":52,"y":38,"w":152,"h":125},
-			"sourceSize": {"w":152,"h":125}
-		},
-		"wind_strong0014 - 副本.png":
-		{
-			"frame": {"x":10,"y":105,"w":48,"h":47},
-			"rotated": false,
-			"trimmed": true,
-			"spriteSourceSize": {"x":52,"y":39,"w":152,"h":125},
-			"sourceSize": {"w":152,"h":125}
-		},
-		"wind_strong0014.png":
-		{
-			"frame": {"x":10,"y":105,"w":48,"h":47},
-			"rotated": false,
-			"trimmed": true,
-			"spriteSourceSize": {"x":52,"y":39,"w":152,"h":125},
-			"sourceSize": {"w":152,"h":125}
-		},
-		"wind_strong0018 - 副本.png":
-		{
-			"frame": {"x":78,"y":105,"w":44,"h":41},
-			"rotated": false,
-			"trimmed": true,
-			"spriteSourceSize": {"x":54,"y":42,"w":152,"h":125},
-			"sourceSize": {"w":152,"h":125}
-		},
-		"wind_strong0018.png":
-		{
-			"frame": {"x":78,"y":105,"w":44,"h":41},
-			"rotated": false,
-			"trimmed": true,
-			"spriteSourceSize": {"x":54,"y":42,"w":152,"h":125},
-			"sourceSize": {"w":152,"h":125}
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":67,"h":67},
+			"sourceSize": {"w":67,"h":67}
 		}
 	}
 }

@@ -70,6 +70,10 @@ var argv = optimist.usage('Usage: $0 [options] <files>')
         describe: 'padding between images in spritesheet',
         default: 0
     })
+    .options('pixeledge',{
+        describe: "pixel edge ext,it's useful when use tiling that need fixed the gap problem",
+        default: 0
+    })
     .options('sort', {
         describe: 'Sort method: maxside (default), area, width or height',
         default: 'maxside'
