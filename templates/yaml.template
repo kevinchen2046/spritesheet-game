@@ -5,6 +5,7 @@ meta:
         w: {{width}}
         h: {{height}}
     scale: 1
+    app: https://github.com/kevinchen2046/spritesheet-game
 frames: 
 {{#files}}
     {{{name}}}{{extension}}:

@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata":true,
+    "module": "CommonJS",
+    "target": "ES6",
+    "sourceMap": false,
+    "typeRoots": ["./node_modules/@types","./libs"],
+    "outDir": "dist",
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true,
+    "removeComments": true,
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "lib",
+    "test"
+  ]
+}

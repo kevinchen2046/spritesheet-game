@@ -4,11 +4,19 @@
   "description": "spritesheet generator without environment dependencies,Supported PIXI.js Cocos2d Easel.js Egret ...",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/test",
+    "test2": "node ./bin/index.js ./test/images -n sprite -c templates/11.template -o ./test -p 60 -e 50"
   },
   "bin": {
     "spritesheet-game": "./bin/index.js"
   },
+  "files": [
+    "./bin/*",
+    "./dist/*",
+    "./index.js",
+    "./README.md",
+    "./README_CN.md"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kevinchen2046/spritesheet-game.git"
@@ -30,10 +38,18 @@
   "homepage": "https://github.com/kevinchen2046/spritesheet-game#readme",
   "dependencies": {
     "binpacking": "^0.0.1",
+    "colors": "^1.4.0",
+    "commander": "^9.4.1",
+    "gifuct-js": "^2.1.2",
     "glob": "^8.0.3",
+    "jpeg-js": "^0.4.4",
     "mustache": "^4.2.0",
     "node-object-hash": "^2.3.10",
-    "optimist": "^0.6.1",
     "pngjs": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/mustache": "^4.2.1",
+    "@types/node": "^18.11.9",
+    "@types/pngjs": "^6.0.1"
   }
 }

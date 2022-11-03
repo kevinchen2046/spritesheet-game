@@ -1,104 +1,52 @@
-#!/usr/bin/env node
-var optimist = require('optimist');
-var argv = optimist.usage('Usage: $0 [options] <files>')
-    .options('f', {
-        alias: 'format',
-        describe: 'format of spritesheet (starling, sparrow, json, yaml, pixi.js, easel.js, egret, zebkit, cocos2d)',
-        default: ''
-    })
-    .options('cf', {
-        alias: 'customFormat',
-        describe: 'path to external format template',
-        default: ''
-    })
-    .options('n', {
-        alias: 'name',
-        describe: 'name of generated spritesheet',
-        default: 'spritesheet'
-    })
-    .options('p', {
-        alias: 'path',
-        describe: 'path to export directory',
-        default: '.'
-    })
-    .options('fullpath', {
-        describe: 'include path in file name',
-        default: false,
-        boolean: true
-    })
-    .options('prefix', {
-        describe: 'prefix for image paths',
-        default: ""
-    })
-    // .options('trim', {
-    //     describe: 'removes transparent whitespaces around images',
-    //     default: false,
-    //     boolean: true
-    // })
-    .options('square', {
-        describe: 'texture should be s square',
-        default: false,
-        boolean: true
-    })
-    .options('powerOfTwo', {
-        describe: 'texture width and height should be power of two',
-        default: false,
-        boolean: true
-    })
-    .options('validate', {
-        describe: 'check algorithm returned data',
-        default: false,
-        boolean: true
-    })
-    .options('scale', {
-        describe: 'percentage scale',
-        default: '100%'
-    })
-    .options('algorithm', {
-        describe: 'packing algorithm: growing-binpacking (default), binpacking (requires passing --width and --height options), vertical or horizontal',
-        default: 'growing-binpacking'
-    })
-    .options('width', {
-        describe: 'width for binpacking',
-        default: undefined
-    })
-    .options('height', {
-        describe: 'height for binpacking',
-        default: undefined
-    })
-    .options('padding', {
-        describe: 'padding between images in spritesheet',
-        default: 0
-    })
-    .options('pixeledge',{
-        describe: "pixel edge ext,it's useful when use tiling that need fixed the gap problem",
-        default: 0
-    })
-    .options('sort', {
-        describe: 'Sort method: maxside (default), area, width or height',
-        default: 'maxside'
-    })
-    .options('divisibleByTwo', {
-        describe: 'every generated frame coordinates should be divisible by two',
-        default: false,
-        boolean: true
-    })
-    .options('cssOrder', {
-        describe: 'specify the exact order of generated css class names',
-        default: ''
-    })
-    .check(function (argv) {
-        if (argv.algorithm !== 'binpacking' || !isNaN(Number(argv.width)) && !isNaN(Number(argv.height))) {
+const { program, Argument } = require('commander');
+require('colors');
+
+program.usage("input-folder [options]")
+    .addArgument(new Argument('[string]', `folder path or pattern of ${'glob'.green}`.grey))
+    .option(
+        '-f, --format [string]',
+        `format of spritesheet.\n`.grey +
+        `[ json, jsonarray , phaser, cocos2d , cocos2d-v3 , pixi.js , easel.js , laya , egret , yaml , zebkit , starling , sparrow , css ]`.yellow, 'json')
+    .option('-c, --custom [string]', 'path to external format template,if you specify --customFormat,then ignore --format'.grey, '')
+    .option('-n, --name [string]', 'name of generated spritesheet'.grey, 'spritesheet')
+    .option('-p, --padding [number]', 'padding between images in spritesheet'.grey, 0)
+    .option('-e, --edge [number]', "pixel edge ext,it's useful when use tiling that need fixed the gap problem".grey, 0)
+    .option('-o, --out [string]', 'path to export directory'.grey, '.')
+    .option('-t, --trim [boolean]', 'removes transparent whitespaces around images'.grey, true)
+    .option(
+        '-a, --algorithm',
+        `packing algorithm:\n`.grey +
+        `* 0 growing-binpacking (default)\n`.yellow +
+        `* 1 binpacking (requires passing --width and --height options)\n`.yellow +
+        `* 2 vertical\n`.yellow +
+        `* 3 horizontal\n`.yellow, 0)
+    .option('-s, --scale [string]', 'percentage scale'.grey, '100%')
+    .option('-w, --width [number]', 'width for binpacking'.grey, undefined)
+    .option('-h, --height [number]', 'height for binpacking'.grey, undefined)
+    .option('-ext, --extension [string]', 'specify file extension'.grey, undefined)
+    .option('-fp, --fullpath [boolean]', 'include path in file name'.grey, false)
+    .option('-pf, --prefix [string]', 'prefix for image paths'.grey, "")
+    .option('-so, --sort [string]', 'Sort method: maxside (default), area, width or height'.grey, 'maxside')
+    .option('-sq, --square [boolean]', 'texture should be s square'.grey, false)
+    .option('-pw, --powerOfTwo [boolean]', 'texture width and height should be power of two'.grey, false)
+    .option('-va, --validate [boolean]', 'check algorithm returned data'.grey, false)
+
+    .option('-dt, --divisibleByTwo [boolean]', 'every generated frame coordinates should be divisible by two'.grey, false)
+    .option('-cs, --cssOrder [string]', 'specify the exact order of generated css class names'.grey, '')
+    .action(function () {
+        const options = program.opts();
+        if (options.algorithm !== 'binpacking' || !isNaN(Number(options.width)) && !isNaN(Number(options.height))) {
             return true;
         }
-
         throw new Error('Width and/or height are not defined for binpacking');
-    })
-    .demand(1)
-    .argv;
-if (argv._.length == 0) {
-    optimist.showHelp();
-} else {
-    let Generator=require("../index");
-    new Generator().exec(argv._, argv);
+    });
+
+program.parse(process.argv);
+// console.log(program.args, program.opts());
+if (program.args.length == 0) {
+    console.log("[!!] you should input source of folder path.".red)
+    console.log("[:)] if you need help,please input --help".yellow)
+    return;
 }
+const { Generator } = require("../dist/generator");
+new Generator().exec(program.args[0], program.opts());

@@ -9,5 +9,8 @@
 		{{#files}}
 				"{{{name}}}":[{{index}}]{{^isLast}},{{/isLast}}
 		{{/files}}
+	},
+	"meta":{
+		"app": "https://github.com/kevinchen2046/spritesheet-game"
 	}
 }

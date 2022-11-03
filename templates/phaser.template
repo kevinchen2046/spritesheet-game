@@ -1,15 +1,11 @@
 {
-	"meta": {
-		"image": "{{{name}}}.png",
-		"size": {"w":{{width}},"h":{{height}}},
-		"scale": "1"
-	},
-	"frames": {
-	{{#files}}
+    "frames":{
+		{{#files}}
 		"{{{name}}}{{extension}}":
 		{
 		{{#trimmed}}
 			"frame": {"x":{{x}},"y":{{y}},"w":{{width}},"h":{{height}}},
+			"pivot": {"x": 0.5, "y": 0.5},
 			"rotated": false,
 			"trimmed": true,
 			"spriteSourceSize": {"x":{{trim.x}},"y":{{trim.y}},"w":{{realwidth}},"h":{{realheight}}},
@@ -17,12 +13,21 @@
 		{{/trimmed}}
 		{{^trimmed}}
 			"frame": {"x":{{x}},"y":{{y}},"w":{{width}},"h":{{height}}},
+			"pivot": {"x": 0.5, "y": 0.5},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":{{width}},"h":{{height}}},
 			"sourceSize": {"w":{{width}},"h":{{height}}}
 		{{/trimmed}}
 		}{{^isLast}},{{/isLast}}
-	{{/files}}
+		{{/files}}
+    },
+	"meta": {
+		"app": "https://github.com/kevinchen2046/spritesheet-game",
+		"format": "RGBA8888",
+		"image": "{{{name}}}.png",
+		"size": {"w":{{width}},"h":{{height}}},
+		"scale": "1",
+		"version": "1.0"
 	}
 }

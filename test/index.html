@@ -1,9 +1,11 @@
 <head>
-    <script src="https://pixijs.download/release/pixi.js"></script>
+    <!-- <script src="./js/pixi.js"></script> -->
+    <!-- <script src="./js/laya.core.js"></script> -->
+    <script src="./js/egret.js"></script>
 </head>
 
 <body>
-    <script>
+    <!-- <script type="text/javascript">
         const app = new PIXI.Application();
         document.body.appendChild(app.view);
 
@@ -26,6 +28,49 @@
             // start animating
             app.start();
         }
+    </script> -->
+    <!-- Laya -->
+    <!-- <script type="text/javascript">
+        class Main {
+            constructor() {
+                Config.useRetinalCanvas = true;
+                Config.useWebGL2 = false;
 
+                Laya.init(500,400, Laya["WebGL"])
+                Laya["Physics"] && Laya["Physics"].enable();
+                Laya["DebugPanel"] && Laya["DebugPanel"].enable();
+
+                if ( Laya.Utils.getQueryString("debug") == "true") Laya.enableDebugPanel();
+                if ( Laya["PhysicsDebugDraw"]) Laya["PhysicsDebugDraw"].enable();
+                Laya.alertGlobalError(true);
+
+                Laya.loader.load("./sprites.atlas", Laya.Handler.create(this, (res)=>{
+                    let texture=Laya.loader.getRes("sprites/youde.jpeg");
+                    let sp=new Laya.Sprite();
+                    sp.texture=texture;
+                    Laya.stage.addChild(sp);
+                }));
+            }
+        }
+        new Main();
+    </script> -->
+
+    <div style="margin: auto;width: 100%;height: 100%;" class="egret-player" data-entry-class="Main"
+        data-orientation="auto" data-scale-mode="showAll" data-frame-rate="30" data-content-width="640"
+        data-content-height="1136" data-show-paint-rect="false" data-multi-fingered="2" data-show-fps="false"
+        data-show-log="false" data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
+    </div>
+    <script type="text/javascript">
+        class Main extends egret.DisplayObjectContainer {
+            constructor() {
+                super();
+                RES.getResByUrl("./sprites.json", (spritesheet) => {
+                    var texture = spriteSheet.getTexture("grasses.png");
+                    this.addChild(new egret.Sprite(texture));
+                }, this, RES.ResourceItem.TYPE_SHEET);
+            }
+        }
+        window.Main=Main;
+        egret.runEgret({ renderMode: "webgl", audioType: 0 });
     </script>
 </body>

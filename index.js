@@ -19,6 +19,6 @@
     ```
  */
 
-const Generator = require("./lib/generator");
+const { Generator } = require("./dist/generator");
 module.exports = Generator;
 

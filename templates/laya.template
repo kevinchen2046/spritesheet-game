@@ -1,0 +1,27 @@
+{
+    "frames":{
+        {{#files}}
+        "{{{name}}}{{extension}}":{
+        {{#trimmed}}
+			"frame":{
+                "idx":0,"x":{{x}},"y":{{y}},"w":{{width}},"h":{{height}}
+            },
+            "sourceSize":{"w":{{realwidth}},"h":{{realheight}}},
+            "spriteSourceSize":{"x":{{trim.x}},"y":{{trim.y}}}
+		{{/trimmed}}
+		{{^trimmed}}
+			"frame":{
+                "idx":0,"x":{{x}},"y":{{y}},"w":{{width}},"h":{{height}}
+            },
+            "sourceSize":{"w":{{width}},"h":{{height}}},
+            "spriteSourceSize":{"x":0,"y":0}
+		{{/trimmed}}
+        }{{^isLast}},{{/isLast}}
+        {{/files}}
+    },
+    "meta":{
+        "app": "https://github.com/kevinchen2046/spritesheet-game",
+        "image":"{{{name}}}.png",
+        "prefix":"{{{name}}}/"
+    }
+}

@@ -7,6 +7,7 @@ masv("images");
     var pkg = masv.images;
 
     var sheet={
+        "app": "https://github.com/kevinchen2046/spritesheet-game"
         "image": "{{{name}}}.png",
         "frames": [
             {{#files}}

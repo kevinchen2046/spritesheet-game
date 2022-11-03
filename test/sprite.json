@@ -1,0 +1,106 @@
+{
+	"meta": {
+		"image": "sprite.png",
+		"size": {"w":1987,"h":1700},
+		"scale": "1",
+		"app": "https://github.com/kevinchen2046/spritesheet-game"
+	},
+	"frames": {
+		"jiaohuang_0.gif":
+		{
+			"frame": {"x":110,"y":1290,"w":300,"h":300},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":300,"h":300},
+			"sourceSize": {"w":300,"h":300}
+		},
+		"grasses.png":
+		{
+			"frame": {"x":1470,"y":1290,"w":90,"h":68},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":90,"h":68},
+			"sourceSize": {"w":90,"h":68}
+		},
+		"jiaohuang_1.gif":
+		{
+			"frame": {"x":110,"y":770,"w":300,"h":300},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":300,"h":300},
+			"sourceSize": {"w":300,"h":300}
+		},
+		"jiaohuang_2.gif":
+		{
+			"frame": {"x":630,"y":770,"w":300,"h":300},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":300,"h":300},
+			"sourceSize": {"w":300,"h":300}
+		},
+		"jiaohuang_3.gif":
+		{
+			"frame": {"x":1290,"y":110,"w":300,"h":300},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":300,"h":300},
+			"sourceSize": {"w":300,"h":300}
+		},
+		"jiaohuang_4.gif":
+		{
+			"frame": {"x":1290,"y":630,"w":300,"h":300},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":300,"h":300},
+			"sourceSize": {"w":300,"h":300}
+		},
+		"youde.jpeg":
+		{
+			"frame": {"x":630,"y":1290,"w":300,"h":291},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":300,"h":291},
+			"sourceSize": {"w":300,"h":291}
+		},
+		"mine_back.png":
+		{
+			"frame": {"x":1150,"y":1290,"w":100,"h":120},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":100,"h":120},
+			"sourceSize": {"w":100,"h":120}
+		},
+		"sky1.png":
+		{
+			"frame": {"x":1810,"y":397,"w":64,"h":64},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+			"sourceSize": {"w":64,"h":64}
+		},
+		"ui_lock.png":
+		{
+			"frame": {"x":1810,"y":110,"w":67,"h":67},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":67,"h":67},
+			"sourceSize": {"w":67,"h":67}
+		},
+		"yaokeai.jpeg":
+		{
+			"frame": {"x":110,"y":110,"w":440,"h":440},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":440,"h":440},
+			"sourceSize": {"w":440,"h":440}
+		},
+		"jiaohuang_5.gif":
+		{
+			"frame": {"x":770,"y":110,"w":300,"h":300},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":300,"h":300},
+			"sourceSize": {"w":300,"h":300}
+		}
+	}
+}
