@@ -1,0 +1,7 @@
+/node_modules/
+/src/
+/libs/
+/test/
+test.js
+tsconfig.json
+package-lock.json

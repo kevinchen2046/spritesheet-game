@@ -1,7 +1,7 @@
 {
   "name": "spritesheet-game",
-  "version": "1.1.71",
-  "description": "spritesheet generator without environment dependencies,Supported PIXI.js Cocos2d Easel.js Egret ...",
+  "version": "1.2.1",
+  "description": "atlas packaging tool of game engine.spritesheet generator of support most engine.",
   "main": "index.js",
   "scripts": {
     "test": "node test/test",
@@ -10,22 +10,18 @@
   "bin": {
     "spritesheet-game": "./bin/index.js"
   },
-  "files": [
-    "./bin/*",
-    "./dist/*",
-    "./index.js",
-    "./README.md",
-    "./README_CN.md"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kevinchen2046/spritesheet-game.git"
   },
   "keywords": [
+    "atlas package",
     "spritesheet",
-    "texture",
+    "texture package",
     "game",
+    "phaser",
     "pixi.js",
+    "laya",
     "cocos2d",
     "easel.js",
     "egret"

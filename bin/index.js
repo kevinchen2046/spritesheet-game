@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const { program, Argument } = require('commander');
 require('colors');
 
