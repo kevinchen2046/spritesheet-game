@@ -8,6 +8,6 @@ generator.exec("./test/images/", {
     padding: 60,
     edge: 50,
     out: "./test",
-    format: "egret",
+    format: "laya",
     custom:"templates/11.template"
 });

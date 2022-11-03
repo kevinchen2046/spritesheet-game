@@ -294,7 +294,7 @@ export class Generator {
 
 		let packfiles = [];
 		files.forEach(v => {
-			if (!packfiles.find(p => p.hash == v.bitmap.hash)) {
+			if (!packfiles.find(p => p.bitmap.hash == v.bitmap.hash)) {
 				packfiles.push(v);
 			} else {
 				v.unpacked = true;
@@ -305,7 +305,7 @@ export class Generator {
 
 		files.forEach(v => {
 			if (v.unpacked) {
-				let r = packfiles.find(p => p.hash == v.bitmap.hash);
+				let r = packfiles.find(p => p.bitmap.hash == v.bitmap.hash);
 				v.x = r.x;
 				v.y = r.y;
 				v.width = r.width;
