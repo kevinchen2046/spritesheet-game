@@ -1,4 +1,4 @@
-export type FormatInfo = { template: string, extension: string, trim: boolean }
+export type FormatInfo = { template: string, extension: string, trim?: boolean }
 
 export const FORMATS: { [name: string]: FormatInfo } = {
     'json': { template: 'json.template', extension: 'json', trim: false },

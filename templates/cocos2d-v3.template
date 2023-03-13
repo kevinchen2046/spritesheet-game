@@ -5,44 +5,40 @@
 	<dict>
 	<key>frames</key>
         <dict>
-        	<%#files%>
-        	<%#trimmed%>
-            	<key><%name%><%extension%></key>
-		<dict>
+        <%#files%>
+        <%#trimmed%>
+            <key><%name%><%extension%></key>
+			<dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{<%trim.offsetX%>,<%trim.offsetY%>}</string>
+                <key>spriteSize</key>
+                <string>{<%trim.width%>,<%trim.height%>}</string>
+                <key>spriteSourceSize</key>
+                <string>{<%originalwidth%>,<%originalheight%>}</string>
+                <key>textureRect</key>
+                <string>{{<%x%>,<%y%>},{<%width%>,<%height%>}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+        <%/trimmed%>
+        <%^trimmed%>
+			<key><%name%><%extension%></key>
+			<dict>
 			<key>aliases</key>
 			<array/>
-			<key>textureRect</key>
-            		<string>{{<%x%>,<%y%>},{<%width%>,<%height%>}}</string>
-            		<key>spriteOffset</key>
-            		<string>{<%trim.offsetX%>,<%trim.offsetY%>}</string>
-            		<key>textureRotated</key>
-            		<false/>
-            		<key>sourceColorRect</key>
-            		<string>{{<%trim.x%>,<%trim.y%>},{<%realwidth%>,<%realheight%>}}</string>
-            		<key>spriteSourceSize</key>
-            		<string>{<%realwidth%>,<%realheight%>}</string>
-			<key>spriteSize</key>
-			<string>{<%realwidth%>,<%trim.height%>}</string>
-		</dict>
-        	<%/trimmed%>
-        	<%^trimmed%>
-		<key><%name%><%extension%></key>
-		<dict>
-			<key>aliases</key>
-			<array/>
-			<key>textureRect</key>
-            		<string>{{<%x%>,<%y%>},{<%width%>,<%height%>}}</string>
-            		<key>spriteOffset</key>
-            		<string>{0,0}</string>
-            		<key>textureRotated</key>
-            		<false/>
-            		<key>sourceColorRect</key>
-            		<string>{{0,0},{<%width%>,<%height%>}}</string>
-            		<key>spriteSourceSize</key>
-            		<string>{<%width%>,<%height%>}</string>
+			<key>spriteOffset</key>
+            <string>{0,0}</string>
 			<key>spriteSize</key>
 			<string>{<%width%>,<%height%>}</string>
-		</dict>
+			<key>spriteSourceSize</key>
+            <string>{<%width%>,<%height%>}</string>
+			<key>textureRect</key>
+            <string>{{<%x%>,<%y%>},{<%width%>,<%height%>}}</string>
+            <key>textureRotated</key>
+            <false/>
+			</dict>
         <%/trimmed%>
         <%/files%>
         </dict>
@@ -53,7 +49,7 @@
             <key>realTextureFileName</key>
             <string><%name%>.png</string>
             <key>size</key>
-            <string>{<%width%>,<%height%>}</string>
+            <string>{<%spritesheetWidth%>,<%spritesheetHeight%>}</string>
             <key>textureFileName</key>
             <string><%name%>.png</string>
         </dict>

@@ -6,7 +6,7 @@ export enum TypeAlgorithms {
   'horizontal',
   'vertical'
 }
-type FileInfo = { x: number, y: number, width: number, height: number, fit: { x: number, y: number }, w: number, h: number };
+type FileInfo = { x: number, y: number, width: number, height: number, fit?: { x: number, y: number }, w: number, h: number };
 type Options = { validate?: boolean, width?: number, height?: number }
 
 
@@ -86,6 +86,7 @@ export default function (
   if (options.validate) {
     validate(files, options);
   }
+  return files;
 };
 
 function validate(files: FileInfo[], options: Options) {

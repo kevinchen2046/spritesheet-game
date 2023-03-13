@@ -73,6 +73,7 @@ function default_1(algorithm = TypeAlgorithms.growingBinpacking, files, options)
     if (options.validate) {
         validate(files, options);
     }
+    return files;
 }
 exports.default = default_1;
 ;

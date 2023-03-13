@@ -23,8 +23,8 @@ frames:
             w: {{width}}
             h: {{height}}
         sourceSize: 
-            w: {{realwidth}}
-            h: {{realheight}}
+            w: {{originalwidth}}
+            h: {{originalheight}}
     {{/trimmed}}
     {{^trimmed}}
         frame: 

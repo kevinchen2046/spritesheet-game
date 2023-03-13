@@ -8,7 +8,7 @@
         <%#files%>
         <%#trimmed%>
             <key><%name%><%extension%></key>
-            <string>{{<%x%>,<%y%>},{<%width%>,<%height%>}}</string>
+            <string>{{<%x%>,<%y%>},{<%outwidth%>,<%height%>}}</string>
             <key>offset</key>
             <string>{<%trim.offsetX%>,<%trim.offsetY%>}</string>
             <key>rotated</key>
@@ -20,15 +20,15 @@
         <%/trimmed%>
         <%^trimmed%>
             <key><%name%><%extension%></key>
-            <string>{{<%x%>,<%y%>},{<%width%>,<%height%>}}</string>
+            <string>{{<%x%>,<%y%>},{<%outwidth%>,<%height%>}}</string>
             <key>offset</key>
             <string>{0,0}</string>
             <key>rotated</key>
             <false/>
             <key>sourceColorRect</key>
-            <string>{{0,0},{<%width%>,<%height%>}}</string>
+            <string>{{0,0},{<%outwidth%>,<%height%>}}</string>
             <key>sourceSize</key>
-            <string>{<%width%>,<%height%>}</string>
+            <string>{<%outwidth%>,<%height%>}</string>
         <%/trimmed%>
         <%/files%>
         </dict>
@@ -39,7 +39,7 @@
             <key>realTextureFileName</key>
             <string><%name%>.png</string>
             <key>size</key>
-            <string>{<%width%>,<%height%>}</string>
+            <string>{<%spritesheetWidth%>,<%spritesheetHeight%>}</string>
             <key>textureFileName</key>
             <string><%name%>.png</string>
         </dict>

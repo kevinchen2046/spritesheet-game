@@ -10,8 +10,8 @@
 			"h":{{height}},
 			"offX": 0,
 			"offY": 0,
-			"sourceW": {{realwidth}},
-			"sourceH": {{realheight}}
+			"sourceW": {{originalwidth}},
+			"sourceH": {{originalheight}}
 		}{{^isLast}},{{/isLast}}
 	{{/files}}
 	},
