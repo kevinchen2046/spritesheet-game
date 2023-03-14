@@ -6,7 +6,9 @@
   "scripts": {
     "test1": "node test/test",
     "test2": "node ./bin/index.js ./test/images -n sprite -c templates/11.template -o ./test -p 60 -e 50",
-    "test3": "tsc && npm i . -g && node test/test3"
+    "test3": "tsc && npm i . -g && node test/test3",
+    "publish":"npm config set registry https://registry.npmjs.org && npm publish",
+    "register-taobao":"npm config set registry https://registry.npm.taobao.org/"
   },
   "bin": {
     "spritesheet-game": "./bin/index.js"
