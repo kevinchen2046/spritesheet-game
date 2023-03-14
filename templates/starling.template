@@ -1,5 +1,5 @@
 <TextureAtlas imagePath="{{{name}}}.png" app="https://github.com/kevinchen2046/spritesheet-game">
 {{#files}}
-	<SubTexture name="{{{name}}}" x="{{x}}" y="{{y}}" width="{{width}}" height="{{height}}" {{#trimmed}}frameX="{{trim.frameX}}" frameY="{{trim.frameY}}" frameWidth="{{trim.width}}" frameHeight="{{trim.height}}"{{/trimmed}}/>
+	<SubTexture name="{{{name}}}" x="{{x}}" y="{{y}}" width="{{width}}" height="{{height}}" {{#trimmed}}frameX="{{frameX}}" frameY="{{frameY}}" frameWidth="{{trim.width}}" frameHeight="{{trim.height}}"{{/trimmed}}/>
 {{/files}}
 </TextureAtlas>

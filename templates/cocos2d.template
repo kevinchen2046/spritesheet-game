@@ -10,13 +10,13 @@
             <key><%name%><%extension%></key>
             <string>{{<%x%>,<%y%>},{<%outwidth%>,<%height%>}}</string>
             <key>offset</key>
-            <string>{<%trim.offsetX%>,<%trim.offsetY%>}</string>
+            <string>{<%cocosOffsetX%>,<%cocosOffsetY%>}</string>
             <key>rotated</key>
             <false/>
             <key>sourceColorRect</key>
-            <string>{{<%trim.x%>,<%trim.y%>},{<%realwidth%>,<%realheight%>}}</string>
+            <string>{{<%trim.x%>,<%trim.y%>},{<%trim.width%>,<%trim.height%>}}</string>
             <key>sourceSize</key>
-            <string>{<%realwidth%>,<%realheight%>}</string>
+            <string>{<%originalwidth%>,<%originalheight%>}</string>
         <%/trimmed%>
         <%^trimmed%>
             <key><%name%><%extension%></key>
@@ -36,7 +36,7 @@
         <dict>
             <key>format</key>
             <integer>2</integer>
-            <key>realTextureFileName</key>
+            <key>originalTextureFileName</key>
             <string><%name%>.png</string>
             <key>size</key>
             <string>{<%spritesheetWidth%>,<%spritesheetHeight%>}</string>

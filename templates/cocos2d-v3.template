@@ -12,9 +12,9 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{<%trim.offsetX%>,<%trim.offsetY%>}</string>
+                <string>{<%cocosOffsetX%>,<%cocosOffsetY%>}</string>
                 <key>spriteSize</key>
-                <string>{<%trim.width%>,<%trim.height%>}</string>
+                <string>{<%width%>,<%height%>}</string>
                 <key>spriteSourceSize</key>
                 <string>{<%originalwidth%>,<%originalheight%>}</string>
                 <key>textureRect</key>

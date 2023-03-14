@@ -7,20 +7,20 @@ program.usage("input-folder [options]")
     .option(
         '-f, --format [string]',
         `format of spritesheet.\n`.grey +
-        `[ json, jsonarray , phaser, cocos2d , cocos2d-v3 , pixi.js , easel.js , laya , egret , yaml , zebkit , starling , sparrow , css ]`.yellow, 'json')
-    .option('-c, --custom [string]', 'path to external format template,if you specify --customFormat,then ignore --format'.grey, '')
-    .option('-n, --name [string]', 'name of generated spritesheet'.grey, 'spritesheet')
-    .option('-p, --padding [number]', 'padding between images in spritesheet'.grey, 0)
-    .option('-e, --edge [number]', "pixel edge ext,it's useful when use tiling that need fixed the gap problem".grey, 0)
+        `[ json, jsonarray , phaser, cocos2d , cocos2d-v3 , pixi.js , easel.js , laya , egret , yaml , zebkit , starling , sparrow , css ]`.yellow)
+    .option('-c, --custom [string]', 'path to external format template,if you specify --customFormat,then ignore --format'.grey)
+    .option('-n, --name [string]', 'name of generated spritesheet'.grey)
+    .option('-p, --padding [number]', 'padding between images in spritesheet'.grey)
+    .option('-e, --edge [number]', "pixel edge ext,it's useful when use tiling that need fixed the gap problem".grey)
     .option('-o, --out [string]', 'path to export directory'.grey, '.')
-    .option('-t, --trim [boolean]', 'removes transparent whitespaces around images'.grey, true)
+    .option('-t, --trim [boolean]', 'removes transparent whitespaces around images'.grey)
     .option(
         '-a, --algorithm',
         `packing algorithm:\n`.grey +
         `* 0 growing-binpacking (default)\n`.yellow +
         `* 1 binpacking (requires passing --width and --height options)\n`.yellow +
         `* 2 vertical\n`.yellow +
-        `* 3 horizontal\n`.yellow, 0)
+        `* 3 horizontal\n`.yellow)
     .option('-s, --scale [string]', 'percentage scale'.grey, '100%')
     .option('-w, --width [number]', 'width for binpacking'.grey, undefined)
     .option('-h, --height [number]', 'height for binpacking'.grey, undefined)
@@ -50,4 +50,5 @@ if (program.args.length == 0) {
     return;
 }
 const { Generator } = require("../dist/generator");
+console.log(program.opts());
 new Generator().exec(program.args[0], program.opts());

@@ -13,7 +13,7 @@ exports.FORMATS = {
     'egret': { template: 'egret.template', extension: 'json', trim: false },
     'laya': { template: 'laya.template', extension: 'atlas', trim: true },
     'zebkit': { template: 'zebkit.template', extension: 'js', trim: false },
-    'cocos2d': { template: 'cocos2d.template', extension: 'plist', trim: false },
-    'cocos2d-v3': { template: 'cocos2d-v3.template', extension: 'plist', trim: false },
+    'cocos2d': { template: 'cocos2d.template', extension: 'plist', trim: true },
+    'cocos2d-v3': { template: 'cocos2d-v3.template', extension: 'plist', trim: true },
     'css': { template: 'css.template', extension: 'css', trim: false }
 };

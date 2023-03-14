@@ -1,11 +1,12 @@
 {
   "name": "spritesheet-game",
-  "version": "1.2.2",
+  "version": "1.3.0",
   "description": "atlas packaging tool of game engine.spritesheet generator of support most engine.",
   "main": "index.js",
   "scripts": {
-    "test": "node test/test",
-    "test2": "node ./bin/index.js ./test/images -n sprite -c templates/11.template -o ./test -p 60 -e 50"
+    "test1": "node test/test",
+    "test2": "node ./bin/index.js ./test/images -n sprite -c templates/11.template -o ./test -p 60 -e 50",
+    "test3": "tsc && npm i . -g && node test/test3"
   },
   "bin": {
     "spritesheet-game": "./bin/index.js"

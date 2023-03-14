@@ -65,16 +65,17 @@ class Generator {
         useOptions.fullpath = options.hasOwnProperty('fullpath') ? options.fullpath : false;
         useOptions.square = options.hasOwnProperty('square') ? options.square : false;
         useOptions.powerOfTwo = options.hasOwnProperty('powerOfTwo') ? options.powerOfTwo : false;
-        useOptions.edge = options.hasOwnProperty('edge') ? parseInt(options.edge, 10) : 0;
+        useOptions.edge = options.hasOwnProperty('edge') ? parseInt(options.edge) : 0;
         useOptions.extension = options.hasOwnProperty('extension') ? options.extension : undefined;
-        useOptions.trim = options.hasOwnProperty('trim') ? options.trim : useOptions.format[0].trim;
+        useOptions.trim = options.hasOwnProperty('trim') ? options.trim == "true" : useOptions.format.trim;
         useOptions.algorithm = (options.hasOwnProperty('algorithm') ? options.algorithm : packing_1.TypeAlgorithms.growingBinpacking);
         useOptions.sort = options.hasOwnProperty('sort') ? options.sort : 'maxside';
-        useOptions.padding = options.hasOwnProperty('padding') ? parseInt(options.padding, 10) : 0;
+        useOptions.padding = options.hasOwnProperty('padding') ? parseInt(options.padding) : 2;
         useOptions.prefix = options.hasOwnProperty('prefix') ? options.prefix : '';
         useOptions.divisibleByTwo = options.hasOwnProperty('divisibleByTwo') ? options.divisibleByTwo : false;
         useOptions.cssOrder = options.hasOwnProperty('cssOrder') ? options.cssOrder : null;
         useOptions.padding += useOptions.edge;
+        console.log(options.hasOwnProperty('padding'), useOptions.padding);
         return useOptions;
     }
     exec(filesOrPatterns, options) {
@@ -267,12 +268,18 @@ class Generator {
             item.height -= options.padding * 2;
             item.x += options.padding;
             item.y += options.padding;
+            item.offsetX = 0;
+            item.offsetY = 0;
+            item.frameX = 0;
+            item.frameY = 0;
             item.index = i;
             if (item.trim) {
-                item.trim.frameX = -item.trim.x;
-                item.trim.frameY = -item.trim.y;
-                item.trim.offsetX = Math.round(item.trim.x + item.width / 2 - item.originalwidth / 2);
-                item.trim.offsetY = Math.round(item.trim.y + item.height / 2 - item.originalheight / 2);
+                item.frameX = -item.trim.x;
+                item.frameY = -item.trim.y;
+                item.offsetX = item.trim.x;
+                item.offsetY = item.trim.y;
+                item.cocosOffsetX = item.trim.x + item.width / 2 - item.originalwidth / 2;
+                item.cocosOffsetY = -item.trim.y - item.height / 2 + item.originalheight / 2;
             }
             item.cssName = item.name || "";
             if (item.cssName.indexOf("_hover") >= 0) {

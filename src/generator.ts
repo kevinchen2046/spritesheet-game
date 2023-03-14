@@ -25,11 +25,6 @@ type TrimRect = {
 	width: number,
 	/**裁剪高度 */
 	height: number,
-
-	frameX?: number,
-	frameY?: number,
-	offsetX?: number,
-	offsetY?: number
 }
 type FileInfo = {
 	path: string,
@@ -53,7 +48,13 @@ type FileInfo = {
 
 	/**裁剪区域 相对原始图位置 */
 	trim?: TrimRect,
-
+	frameX?: number,
+	frameY?: number,
+	offsetX?: number,
+	offsetY?: number,
+	cocosOffsetX?: number,
+	cocosOffsetY?: number,
+	
 	unpacked?: boolean,
 	spritesheetWidth?: number,
 	spritesheetHeight?: number,
@@ -166,23 +167,23 @@ export class Generator {
 			console.log(`[!!] check templates config:`.yellow, useOptions.format);
 		}
 		useOptions.format.template = fs.readFileSync(fpath, "utf-8")
-		// options.format = FORMATS[options.format] || FORMATS['json'];
 		useOptions.name = options.name || 'spritesheet';
 		useOptions.out = path.resolve(options.out || '.');
 		useOptions.fullpath = options.hasOwnProperty('fullpath') ? options.fullpath : false;
 		useOptions.square = options.hasOwnProperty('square') ? options.square : false;
 		useOptions.powerOfTwo = options.hasOwnProperty('powerOfTwo') ? options.powerOfTwo : false;
 		/**像素边缘扩展 */
-		useOptions.edge = options.hasOwnProperty('edge') ? parseInt(options.edge, 10) : 0;
+		useOptions.edge = options.hasOwnProperty('edge') ? parseInt(options.edge) : 0;
 		useOptions.extension = options.hasOwnProperty('extension') ? options.extension : undefined;
-		useOptions.trim = options.hasOwnProperty('trim') ? options.trim : useOptions.format[0].trim;
+		useOptions.trim = options.hasOwnProperty('trim') ? options.trim=="true" : useOptions.format.trim;
 		useOptions.algorithm = (options.hasOwnProperty('algorithm') ? options.algorithm : TypeAlgorithms.growingBinpacking) as TypeAlgorithms;
 		useOptions.sort = options.hasOwnProperty('sort') ? options.sort : 'maxside';
-		useOptions.padding = options.hasOwnProperty('padding') ? parseInt(options.padding, 10) : 0;
+		useOptions.padding = options.hasOwnProperty('padding') ? parseInt(options.padding) : 2;
 		useOptions.prefix = options.hasOwnProperty('prefix') ? options.prefix : '';
 		useOptions.divisibleByTwo = options.hasOwnProperty('divisibleByTwo') ? options.divisibleByTwo : false;
 		useOptions.cssOrder = options.hasOwnProperty('cssOrder') ? options.cssOrder : null;
 		useOptions.padding += useOptions.edge;
+		// console.log(options.hasOwnProperty('padding'),useOptions.padding)
 		return useOptions as OptionsUse;
 	}
 
@@ -430,13 +431,22 @@ export class Generator {
 			item.height -= options.padding * 2;
 			item.x += options.padding;
 			item.y += options.padding;
-
+			item.offsetX =0;
+			item.offsetY =0;
+			item.frameX =0;
+			item.frameY =0;
 			item.index = i;
 			if (item.trim) {
-				item.trim.frameX = -item.trim.x;
-				item.trim.frameY = -item.trim.y;
-				item.trim.offsetX = Math.round(item.trim.x + item.width / 2 - item.originalwidth / 2);
-				item.trim.offsetY = Math.round(item.trim.y + item.height / 2 - item.originalheight / 2);
+				item.frameX = -item.trim.x;
+				item.frameY = -item.trim.y;
+				item.offsetX = item.trim.x;
+				item.offsetY = item.trim.y;
+				// item.trim.offsetX = (item.originalwidth / 2 - item.width / 2);
+				// item.trim.offsetY = -(item.originalheight / 2 - item.height / 2);
+				// item.trim.offsetX += item.width / 2 - item.originalwidth / 2;
+				// item.trim.offsetY += -item.height / 2 + item.originalheight / 2;
+				item.cocosOffsetX = item.trim.x + item.width / 2 - item.originalwidth / 2;
+				item.cocosOffsetY = -item.trim.y - item.height / 2 + item.originalheight / 2;
 			}
 			item.cssName = item.name || "";
 			if (item.cssName.indexOf("_hover") >= 0) {
