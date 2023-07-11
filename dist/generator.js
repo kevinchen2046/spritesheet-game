@@ -75,7 +75,6 @@ class Generator {
         useOptions.divisibleByTwo = options.hasOwnProperty('divisibleByTwo') ? options.divisibleByTwo : false;
         useOptions.cssOrder = options.hasOwnProperty('cssOrder') ? options.cssOrder : null;
         useOptions.padding += useOptions.edge;
-        console.log(options.hasOwnProperty('padding'), useOptions.padding);
         return useOptions;
     }
     exec(filesOrPatterns, options) {

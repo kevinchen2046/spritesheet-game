@@ -34,6 +34,8 @@ program.usage("input-folder [options]")
 
     .option('-dt, --divisibleByTwo [boolean]', 'every generated frame coordinates should be divisible by two'.grey, false)
     .option('-cs, --cssOrder [string]', 'specify the exact order of generated css class names'.grey, '')
+
+    .option('-bup, --breakup [boolean]', 'To break up the atlas, first you need to specify the format.'.grey, false)
     .action(function () {
         const options = program.opts();
         if (options.algorithm !== 'binpacking' || !isNaN(Number(options.width)) && !isNaN(Number(options.height))) {
@@ -49,6 +51,12 @@ if (program.args.length == 0) {
     console.log("[:)] if you need help,please input --help".yellow)
     return;
 }
-const { Generator } = require("../dist/generator");
-console.log(program.opts());
-new Generator().exec(program.args[0], program.opts());
+let options = program.opts();
+console.log(options);
+if (options.breakup) {
+    const { BreakUp } = require("../dist/breakup");
+    new BreakUp().exec(program.args[0], options);
+} else {
+    const { Generator } = require("../dist/generator");
+    new Generator().exec(program.args[0], options);
+}
