@@ -54,7 +54,7 @@ type FileInfo = {
 	offsetY?: number,
 	cocosOffsetX?: number,
 	cocosOffsetY?: number,
-	
+
 	unpacked?: boolean,
 	spritesheetWidth?: number,
 	spritesheetHeight?: number,
@@ -121,8 +121,17 @@ let EXTS = [".png", ".jpg", ".jpeg", ".gif"];
 
 export class Generator {
 
-	private pickfiles(patterns: string | string[]) {
-		patterns = Array.isArray(patterns) ? patterns : [patterns];
+	private pickfiles(folderOrPattern: string) {
+		let patterns = [];
+		if (folderOrPattern.charAt(0) == "[" && folderOrPattern.charAt(folderOrPattern.length - 1) == "]") {
+			folderOrPattern = folderOrPattern.substring(1, folderOrPattern.length - 1);
+		}
+		if (folderOrPattern.indexOf(",") >= 0) {
+			patterns = folderOrPattern.split(",");
+		} else {
+			patterns = [folderOrPattern];
+		}
+		patterns=patterns.filter(v=>!!v);
 		let results = [];
 		patterns.forEach(pattern => {
 			if (!!path.extname(pattern)) {
@@ -138,7 +147,7 @@ export class Generator {
 				results.push(...files.map(v => `${pattern}/${v}`));
 			}
 		});
-		if (results.length == patterns.length) {
+		if (results.length == folderOrPattern.length) {
 			if (!results.every(v => !!EXTS.find(ext => ext == path.extname(v)))) {
 				throw new Error('no files specified');
 			}
@@ -175,7 +184,7 @@ export class Generator {
 		/**像素边缘扩展 */
 		useOptions.edge = options.hasOwnProperty('edge') ? parseInt(options.edge) : 0;
 		useOptions.extension = options.hasOwnProperty('extension') ? options.extension : undefined;
-		useOptions.trim = options.hasOwnProperty('trim') ? options.trim=="true" : useOptions.format.trim;
+		useOptions.trim = options.hasOwnProperty('trim') ? options.trim == "true" : useOptions.format.trim;
 		useOptions.algorithm = (options.hasOwnProperty('algorithm') ? options.algorithm : TypeAlgorithms.growingBinpacking) as TypeAlgorithms;
 		useOptions.sort = options.hasOwnProperty('sort') ? options.sort : 'maxside';
 		useOptions.padding = options.hasOwnProperty('padding') ? parseInt(options.padding) : 2;
@@ -187,7 +196,7 @@ export class Generator {
 		return useOptions as OptionsUse;
 	}
 
-	public async exec(filesOrPatterns: string | string[], options: Options) {
+	public async exec(filesOrPatterns: string, options: Options) {
 		let files = this.pickfiles(filesOrPatterns);
 		if (!files || files.length == 0) {
 			throw new Error('no files specified');
@@ -431,10 +440,10 @@ export class Generator {
 			item.height -= options.padding * 2;
 			item.x += options.padding;
 			item.y += options.padding;
-			item.offsetX =0;
-			item.offsetY =0;
-			item.frameX =0;
-			item.frameY =0;
+			item.offsetX = 0;
+			item.offsetY = 0;
+			item.frameX = 0;
+			item.frameY = 0;
 			item.index = i;
 			if (item.trim) {
 				item.frameX = -item.trim.x;

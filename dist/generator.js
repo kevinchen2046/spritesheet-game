@@ -20,8 +20,18 @@ const sorter_1 = require("./sorter");
 const format_1 = require("./format");
 let EXTS = [".png", ".jpg", ".jpeg", ".gif"];
 class Generator {
-    pickfiles(patterns) {
-        patterns = Array.isArray(patterns) ? patterns : [patterns];
+    pickfiles(folderOrPattern) {
+        let patterns = [];
+        if (folderOrPattern.charAt(0) == "[" && folderOrPattern.charAt(folderOrPattern.length - 1) == "]") {
+            folderOrPattern = folderOrPattern.substring(1, folderOrPattern.length - 1);
+        }
+        if (folderOrPattern.indexOf(",") >= 0) {
+            patterns = folderOrPattern.split(",");
+        }
+        else {
+            patterns = [folderOrPattern];
+        }
+        patterns = patterns.filter(v => !!v);
         let results = [];
         patterns.forEach(pattern => {
             if (!!path.extname(pattern)) {
@@ -37,7 +47,7 @@ class Generator {
                 results.push(...files.map(v => `${pattern}/${v}`));
             }
         });
-        if (results.length == patterns.length) {
+        if (results.length == folderOrPattern.length) {
             if (!results.every(v => !!EXTS.find(ext => ext == path.extname(v)))) {
                 throw new Error('no files specified');
             }
