@@ -79,6 +79,7 @@ export type Options = {
 	fullpath?: boolean,
 	square?: boolean,
 	powerOfTwo?: boolean,
+	scale?:string,
 	/**像素边缘扩展 */
 	edge?: string,
 	extension?: string,
@@ -100,6 +101,7 @@ type OptionsUse = {
 	fullpath?: boolean,
 	square?: boolean,
 	powerOfTwo?: boolean,
+	scale?:number,
 	/**像素边缘扩展 */
 	edge?: number,
 	extension?: string,
@@ -181,6 +183,7 @@ export class Generator {
 		useOptions.fullpath = options.hasOwnProperty('fullpath') ? options.fullpath : false;
 		useOptions.square = options.hasOwnProperty('square') ? options.square : false;
 		useOptions.powerOfTwo = options.hasOwnProperty('powerOfTwo') ? options.powerOfTwo : false;
+		useOptions.scale = options.hasOwnProperty('scale') ? parseFloat(options.scale) : 1;
 		/**像素边缘扩展 */
 		useOptions.edge = options.hasOwnProperty('edge') ? parseInt(options.edge) : 0;
 		useOptions.extension = options.hasOwnProperty('extension') ? options.extension : undefined;
