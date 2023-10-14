@@ -246,7 +246,7 @@ export class Generator {
 			for (let y = 0; y < bitmap.height; y++) {
 				let idx = (bitmap.width * y + x) << 2;
 				let alpha = bitmap.data[idx + 3];
-				if (alpha != 0) {
+				if (alpha > 1) {
 					rect.x = x;
 					break left;
 				}
@@ -257,7 +257,7 @@ export class Generator {
 			for (let x = 0; x < bitmap.width; x++) {
 				let idx = (bitmap.width * y + x) << 2;
 				let alpha = bitmap.data[idx + 3];
-				if (alpha != 0) {
+				if (alpha > 1) {
 					rect.y = y;
 					break top;
 				}
@@ -267,7 +267,7 @@ export class Generator {
 			for (let y = 0; y < bitmap.height; y++) {
 				let idx = (bitmap.width * y + x) << 2;
 				let alpha = bitmap.data[idx + 3];
-				if (alpha != 0) {
+				if (alpha > 1) {
 					rect.width = Math.min(x - rect.x + 1, bitmap.width);
 					break right;
 				}
@@ -277,7 +277,7 @@ export class Generator {
 			for (let x = 0; x < bitmap.width; x++) {
 				let idx = (bitmap.width * y + x) << 2;
 				let alpha = bitmap.data[idx + 3];
-				if (alpha != 0) {
+				if (alpha > 1) {
 					rect.height = Math.min(y - rect.y + 1, bitmap.height);
 					break bottom;
 				}

@@ -44,7 +44,7 @@ program.usage("input-folder [options]")
         throw new Error('Width and/or height are not defined for binpacking');
     });
 
-program.parse(process.argv);
+program.parse(process.argv.map(v=>decodeURIComponent(v)));
 // console.log(program.args, program.opts());
 if (program.args.length == 0) {
     console.log("[!!] you should input source of folder path.".red)
@@ -52,7 +52,7 @@ if (program.args.length == 0) {
     return;
 }
 let options = program.opts();
-console.log(options);
+// console.log(options);
 if (options.breakup) {
     const { BreakUp } = require("../dist/breakup");
     new BreakUp().exec(program.args[0], options);
