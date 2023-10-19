@@ -15,205 +15,32 @@ import packing, { TypeAlgorithms } from "./packing";
 import sorter from "./sorter";
 import { FORMATS, FormatInfo } from "./format";
 import * as colors from "colors";
+import { FileInfo, Options, OptionsUse, TrimRect } from "./const";
+import { Util } from "./util";
 
-type TrimRect = {
-	/**裁剪X */
-	x: number,
-	/**裁剪Y */
-	y: number,
-	/**裁剪宽度 */
-	width: number,
-	/**裁剪高度 */
-	height: number,
-}
-type FileInfo = {
-	path: string,
-	name?: string,
-	bitmap?: Bitmap,
-	/**输出到画布的矩形X */
-	x?: number,
-	/**输出到画布的矩形Y */
-	y?: number,
-	/**输出到画布的矩形宽度 */
-	width?: number,
-	/**输出到画布的矩形高度 */
-	height?: number,
-	/**输出到画布的矩形面积 */
-	outarea?: number,
-	/**图片原始宽度 */
-	originalwidth?: number,
-	/**图片原始高度 */
-	originalheight?: number,
-	trimmed?: boolean,
 
-	/**裁剪区域 相对原始图位置 */
-	trim?: TrimRect,
-	frameX?: number,
-	frameY?: number,
-	offsetX?: number,
-	offsetY?: number,
-	cocosOffsetX?: number,
-	cocosOffsetY?: number,
-
-	unpacked?: boolean,
-	spritesheetWidth?: number,
-	spritesheetHeight?: number,
-	index?: number,
-
-	//临时属性
-	// w?: number, h?: number,
-	// frameX?: number,
-	// frameY?: number,
-	// offsetX?: number,
-	// offsetY?: number,
-
-	cssName?: string,
-	cssPriority?: number,
-	isLast?: boolean
-};
-
-export type Options = {
-	format?: string,
-	name?: string,
-	out?: string,
-	fullpath?: boolean,
-	square?: boolean,
-	powerOfTwo?: boolean,
-	scale?:string,
-	/**像素边缘扩展 */
-	edge?: string,
-	extension?: string,
-	trim?: string,
-	algorithm?: string
-	sort?: string,
-	padding?: string,
-	prefix?: string,
-	divisibleByTwo?: boolean,
-	cssOrder?: string,
-	width?: string, height?: string,
-	custom?: string
-}
-
-type OptionsUse = {
-	format?: FormatInfo,
-	name?: string,
-	out?: string,
-	fullpath?: boolean,
-	square?: boolean,
-	powerOfTwo?: boolean,
-	scale?:number,
-	/**像素边缘扩展 */
-	edge?: number,
-	extension?: string,
-	trim?: boolean,
-	algorithm?: TypeAlgorithms
-	sort?: string,
-	padding?: number,
-	prefix?: string,
-	divisibleByTwo?: boolean,
-	cssOrder?: string,
-	/** */
-	width?: number,
-	height?: number,
-	custom?: string,
-	files?: FileInfo[]
-}
-
-let EXTS = [".png", ".jpg", ".jpeg", ".gif"];
 
 export class Generator {
 
-	private pickfiles(folderOrPattern: string) {
-		let patterns = [];
-		if (folderOrPattern.charAt(0) == "[" && folderOrPattern.charAt(folderOrPattern.length - 1) == "]") {
-			folderOrPattern = folderOrPattern.substring(1, folderOrPattern.length - 1);
-		}
-		if (folderOrPattern.indexOf(",") >= 0) {
-			patterns = folderOrPattern.split(",");
-		} else {
-			patterns = [folderOrPattern];
-		}
-		patterns=patterns.filter(v=>!!v);
-		let results = [];
-		patterns.forEach(pattern => {
-			if (!!path.extname(pattern)) {
-				if (fs.existsSync(pattern)) {
-					results.push(pattern)
-					return;
-				}
-				results.push(...glob.sync(pattern));
-				return;
-			}
-			if (fs.existsSync(pattern)) {
-				let files = fs.readdirSync(pattern);
-				results.push(...files.map(v => `${pattern}/${v}`));
-			}
-		});
-		if (results.length == folderOrPattern.length) {
-			if (!results.every(v => !!EXTS.find(ext => ext == path.extname(v)))) {
-				throw new Error('no files specified');
-			}
-		}
-		return results;
+	public async execUsePattern(filesOrPatterns: string, options: Options) {
+		let files = Util.pickfiles(filesOrPatterns);
+		let useoptions = Util.parseOptions(options);
+		this.exec(files, useoptions)
 	}
 
-	private parseOptions(options: Options) {
-		options = options || {};
-		// if (Array.isArray(options.format)) {
-		// 	options.format = options.format.map(function (x: string) { return FORMATS[x] });
-		// }else if (options.format || !options.customFormat) {
-		// 	options.format = [FORMATS[options.format] || FORMATS['json']];
-		// }
-		let useOptions: OptionsUse = {};
-		if (options.custom) {
-			if (fs.existsSync(options.custom)) {
-				useOptions.format = { template: fs.readFileSync(options.custom, "utf-8"), extension: path.extname(options.custom) }
-				return;
-			}
-			console.log(`[!!] invalid custom format path:${options.custom},use default format.`.yellow)
-		}
-		useOptions.format = FORMATS[options.format] || FORMATS['json'];
-		let fpath = path.resolve(`${__dirname}/../templates/${useOptions.format.template}`);
-		if (!fs.existsSync(fpath)) {
-			console.log(`[!!] check templates config:`.yellow, useOptions.format);
-		}
-		useOptions.format.template = fs.readFileSync(fpath, "utf-8")
-		useOptions.name = options.name || 'spritesheet';
-		useOptions.out = path.resolve(options.out || '.');
-		useOptions.fullpath = options.hasOwnProperty('fullpath') ? options.fullpath : false;
-		useOptions.square = options.hasOwnProperty('square') ? options.square : false;
-		useOptions.powerOfTwo = options.hasOwnProperty('powerOfTwo') ? options.powerOfTwo : false;
-		useOptions.scale = options.hasOwnProperty('scale') ? parseFloat(options.scale) : 1;
-		/**像素边缘扩展 */
-		useOptions.edge = options.hasOwnProperty('edge') ? parseInt(options.edge) : 0;
-		useOptions.extension = options.hasOwnProperty('extension') ? options.extension : undefined;
-		useOptions.trim = options.hasOwnProperty('trim') ? options.trim == "true" : useOptions.format.trim;
-		useOptions.algorithm = (options.hasOwnProperty('algorithm') ? options.algorithm : TypeAlgorithms.growingBinpacking) as TypeAlgorithms;
-		useOptions.sort = options.hasOwnProperty('sort') ? options.sort : 'maxside';
-		useOptions.padding = options.hasOwnProperty('padding') ? parseInt(options.padding) : 2;
-		useOptions.prefix = options.hasOwnProperty('prefix') ? options.prefix : '';
-		useOptions.divisibleByTwo = options.hasOwnProperty('divisibleByTwo') ? options.divisibleByTwo : false;
-		useOptions.cssOrder = options.hasOwnProperty('cssOrder') ? options.cssOrder : null;
-		useOptions.padding += useOptions.edge;
-		// console.log(options.hasOwnProperty('padding'),useOptions.padding)
-		return useOptions as OptionsUse;
-	}
+	public async exec(filePaths: string[], options: OptionsUse) {
 
-	public async exec(filesOrPatterns: string, options: Options) {
-		let files = this.pickfiles(filesOrPatterns);
-		if (!files || files.length == 0) {
+		if (!filePaths || filePaths.length == 0) {
 			throw new Error('no files specified');
 		}
 
-		let userOptions = this.parseOptions(options);
-
-		files = files.map(function (filepath) {
+		let files = filePaths.map(function (filepath) {
 			var resolvePath = path.resolve(filepath);
 			var name = "";
-			if (userOptions.fullpath) {
+			if (options.fullpath) {
 				name = filepath.substring(0, filepath.lastIndexOf("."));
 			} else {
-				name = `${userOptions.prefix}${resolvePath.substring(resolvePath.lastIndexOf(path.sep) + 1, resolvePath.lastIndexOf('.'))}`;
+				name = `${options.prefix}${resolvePath.substring(resolvePath.lastIndexOf(path.sep) + 1, resolvePath.lastIndexOf('.'))}`;
 			}
 			return {
 				path: resolvePath,
@@ -222,15 +49,15 @@ export class Generator {
 			};
 		});
 
-		if (!fs.existsSync(userOptions.out) && userOptions.out !== '') {
-			fs.mkdirSync(userOptions.out);
+		if (!fs.existsSync(options.out) && options.out !== '') {
+			fs.mkdirSync(options.out);
 		}
 
 		files = await this.readFiles(files);
-		await this.getImagesSizes(files, userOptions);
-		await this.determineCanvasSize(files, userOptions);
-		await this.generateImage(files, userOptions);
-		await this.generateData(files, userOptions);
+		await this.getImagesSizes(files, options);
+		await this.determineCanvasSize(files, options);
+		await this.generateImage(files, options);
+		await this.generateData(files, options);
 
 		console.log('√ Spritesheet successfully generated.'.green);
 	}

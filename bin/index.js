@@ -58,5 +58,5 @@ if (options.breakup) {
     new BreakUp().exec(program.args[0], options);
 } else {
     const { Generator } = require("../dist/generator");
-    new Generator().exec(program.args[0], options);
+    new Generator().execUsePattern(program.args[0], options);
 }

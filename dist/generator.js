@@ -14,94 +14,30 @@ const fs = require("fs");
 const path = require("path");
 const bitmap_1 = require("./bitmap");
 const Mustache = require("mustache");
-const glob = require("glob");
 const packing_1 = require("./packing");
 const sorter_1 = require("./sorter");
-const format_1 = require("./format");
-let EXTS = [".png", ".jpg", ".jpeg", ".gif"];
+const util_1 = require("./util");
 class Generator {
-    pickfiles(folderOrPattern) {
-        let patterns = [];
-        if (folderOrPattern.charAt(0) == "[" && folderOrPattern.charAt(folderOrPattern.length - 1) == "]") {
-            folderOrPattern = folderOrPattern.substring(1, folderOrPattern.length - 1);
-        }
-        if (folderOrPattern.indexOf(",") >= 0) {
-            patterns = folderOrPattern.split(",");
-        }
-        else {
-            patterns = [folderOrPattern];
-        }
-        patterns = patterns.filter(v => !!v);
-        let results = [];
-        patterns.forEach(pattern => {
-            if (!!path.extname(pattern)) {
-                if (fs.existsSync(pattern)) {
-                    results.push(pattern);
-                    return;
-                }
-                results.push(...glob.sync(pattern));
-                return;
-            }
-            if (fs.existsSync(pattern)) {
-                let files = fs.readdirSync(pattern);
-                results.push(...files.map(v => `${pattern}/${v}`));
-            }
-        });
-        if (results.length == folderOrPattern.length) {
-            if (!results.every(v => !!EXTS.find(ext => ext == path.extname(v)))) {
-                throw new Error('no files specified');
-            }
-        }
-        return results;
-    }
-    parseOptions(options) {
-        options = options || {};
-        let useOptions = {};
-        if (options.custom) {
-            if (fs.existsSync(options.custom)) {
-                useOptions.format = { template: fs.readFileSync(options.custom, "utf-8"), extension: path.extname(options.custom) };
-                return;
-            }
-            console.log(`[!!] invalid custom format path:${options.custom},use default format.`.yellow);
-        }
-        useOptions.format = format_1.FORMATS[options.format] || format_1.FORMATS['json'];
-        let fpath = path.resolve(`${__dirname}/../templates/${useOptions.format.template}`);
-        if (!fs.existsSync(fpath)) {
-            console.log(`[!!] check templates config:`.yellow, useOptions.format);
-        }
-        useOptions.format.template = fs.readFileSync(fpath, "utf-8");
-        useOptions.name = options.name || 'spritesheet';
-        useOptions.out = path.resolve(options.out || '.');
-        useOptions.fullpath = options.hasOwnProperty('fullpath') ? options.fullpath : false;
-        useOptions.square = options.hasOwnProperty('square') ? options.square : false;
-        useOptions.powerOfTwo = options.hasOwnProperty('powerOfTwo') ? options.powerOfTwo : false;
-        useOptions.edge = options.hasOwnProperty('edge') ? parseInt(options.edge) : 0;
-        useOptions.extension = options.hasOwnProperty('extension') ? options.extension : undefined;
-        useOptions.trim = options.hasOwnProperty('trim') ? options.trim == "true" : useOptions.format.trim;
-        useOptions.algorithm = (options.hasOwnProperty('algorithm') ? options.algorithm : packing_1.TypeAlgorithms.growingBinpacking);
-        useOptions.sort = options.hasOwnProperty('sort') ? options.sort : 'maxside';
-        useOptions.padding = options.hasOwnProperty('padding') ? parseInt(options.padding) : 2;
-        useOptions.prefix = options.hasOwnProperty('prefix') ? options.prefix : '';
-        useOptions.divisibleByTwo = options.hasOwnProperty('divisibleByTwo') ? options.divisibleByTwo : false;
-        useOptions.cssOrder = options.hasOwnProperty('cssOrder') ? options.cssOrder : null;
-        useOptions.padding += useOptions.edge;
-        return useOptions;
-    }
-    exec(filesOrPatterns, options) {
+    execUsePattern(filesOrPatterns, options) {
         return __awaiter(this, void 0, void 0, function* () {
-            let files = this.pickfiles(filesOrPatterns);
-            if (!files || files.length == 0) {
+            let files = util_1.Util.pickfiles(filesOrPatterns);
+            let useoptions = util_1.Util.parseOptions(options);
+            this.exec(files, useoptions);
+        });
+    }
+    exec(filePaths, options) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!filePaths || filePaths.length == 0) {
                 throw new Error('no files specified');
             }
-            let userOptions = this.parseOptions(options);
-            files = files.map(function (filepath) {
+            let files = filePaths.map(function (filepath) {
                 var resolvePath = path.resolve(filepath);
                 var name = "";
-                if (userOptions.fullpath) {
+                if (options.fullpath) {
                     name = filepath.substring(0, filepath.lastIndexOf("."));
                 }
                 else {
-                    name = `${userOptions.prefix}${resolvePath.substring(resolvePath.lastIndexOf(path.sep) + 1, resolvePath.lastIndexOf('.'))}`;
+                    name = `${options.prefix}${resolvePath.substring(resolvePath.lastIndexOf(path.sep) + 1, resolvePath.lastIndexOf('.'))}`;
                 }
                 return {
                     path: resolvePath,
@@ -109,14 +45,14 @@ class Generator {
                     extension: path.extname(filepath)
                 };
             });
-            if (!fs.existsSync(userOptions.out) && userOptions.out !== '') {
-                fs.mkdirSync(userOptions.out);
+            if (!fs.existsSync(options.out) && options.out !== '') {
+                fs.mkdirSync(options.out);
             }
             files = yield this.readFiles(files);
-            yield this.getImagesSizes(files, userOptions);
-            yield this.determineCanvasSize(files, userOptions);
-            yield this.generateImage(files, userOptions);
-            yield this.generateData(files, userOptions);
+            yield this.getImagesSizes(files, options);
+            yield this.determineCanvasSize(files, options);
+            yield this.generateImage(files, options);
+            yield this.generateData(files, options);
             console.log('√ Spritesheet successfully generated.'.green);
         });
     }
@@ -126,7 +62,7 @@ class Generator {
             for (let y = 0; y < bitmap.height; y++) {
                 let idx = (bitmap.width * y + x) << 2;
                 let alpha = bitmap.data[idx + 3];
-                if (alpha != 0) {
+                if (alpha > 1) {
                     rect.x = x;
                     break left;
                 }
@@ -136,7 +72,7 @@ class Generator {
             for (let x = 0; x < bitmap.width; x++) {
                 let idx = (bitmap.width * y + x) << 2;
                 let alpha = bitmap.data[idx + 3];
-                if (alpha != 0) {
+                if (alpha > 1) {
                     rect.y = y;
                     break top;
                 }
@@ -146,7 +82,7 @@ class Generator {
             for (let y = 0; y < bitmap.height; y++) {
                 let idx = (bitmap.width * y + x) << 2;
                 let alpha = bitmap.data[idx + 3];
-                if (alpha != 0) {
+                if (alpha > 1) {
                     rect.width = Math.min(x - rect.x + 1, bitmap.width);
                     break right;
                 }
@@ -156,7 +92,7 @@ class Generator {
             for (let x = 0; x < bitmap.width; x++) {
                 let idx = (bitmap.width * y + x) << 2;
                 let alpha = bitmap.data[idx + 3];
-                if (alpha != 0) {
+                if (alpha > 1) {
                     rect.height = Math.min(y - rect.y + 1, bitmap.height);
                     break bottom;
                 }
