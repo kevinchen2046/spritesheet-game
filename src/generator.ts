@@ -24,23 +24,21 @@ export class Generator {
 
 	public async execUsePattern(filesOrPatterns: string, options: Options) {
 		let files = Util.pickfiles(filesOrPatterns);
-		let useoptions = Util.parseOptions(options);
-		this.exec(files, useoptions)
+		this.exec(files, options);
 	}
 
-	public async exec(filePaths: string[], options: OptionsUse) {
-
+	public async exec(filePaths: string[], options: Options) {
 		if (!filePaths || filePaths.length == 0) {
 			throw new Error('no files specified');
 		}
-
+		let useoptions = Util.parseOptions(options);
 		let files = filePaths.map(function (filepath) {
 			var resolvePath = path.resolve(filepath);
 			var name = "";
-			if (options.fullpath) {
+			if (useoptions.fullpath) {
 				name = filepath.substring(0, filepath.lastIndexOf("."));
 			} else {
-				name = `${options.prefix}${resolvePath.substring(resolvePath.lastIndexOf(path.sep) + 1, resolvePath.lastIndexOf('.'))}`;
+				name = `${useoptions.prefix}${resolvePath.substring(resolvePath.lastIndexOf(path.sep) + 1, resolvePath.lastIndexOf('.'))}`;
 			}
 			return {
 				path: resolvePath,
@@ -49,15 +47,15 @@ export class Generator {
 			};
 		});
 
-		if (!fs.existsSync(options.out) && options.out !== '') {
-			fs.mkdirSync(options.out);
+		if (!fs.existsSync(useoptions.out) && useoptions.out !== '') {
+			fs.mkdirSync(useoptions.out);
 		}
 
 		files = await this.readFiles(files);
-		await this.getImagesSizes(files, options);
-		await this.determineCanvasSize(files, options);
-		await this.generateImage(files, options);
-		await this.generateData(files, options);
+		await this.getImagesSizes(files, useoptions);
+		await this.determineCanvasSize(files, useoptions);
+		await this.generateImage(files, useoptions);
+		await this.generateData(files, useoptions);
 
 		console.log('√ Spritesheet successfully generated.'.green);
 	}

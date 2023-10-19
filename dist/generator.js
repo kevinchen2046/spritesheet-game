@@ -21,8 +21,7 @@ class Generator {
     execUsePattern(filesOrPatterns, options) {
         return __awaiter(this, void 0, void 0, function* () {
             let files = util_1.Util.pickfiles(filesOrPatterns);
-            let useoptions = util_1.Util.parseOptions(options);
-            this.exec(files, useoptions);
+            this.exec(files, options);
         });
     }
     exec(filePaths, options) {
@@ -30,14 +29,15 @@ class Generator {
             if (!filePaths || filePaths.length == 0) {
                 throw new Error('no files specified');
             }
+            let useoptions = util_1.Util.parseOptions(options);
             let files = filePaths.map(function (filepath) {
                 var resolvePath = path.resolve(filepath);
                 var name = "";
-                if (options.fullpath) {
+                if (useoptions.fullpath) {
                     name = filepath.substring(0, filepath.lastIndexOf("."));
                 }
                 else {
-                    name = `${options.prefix}${resolvePath.substring(resolvePath.lastIndexOf(path.sep) + 1, resolvePath.lastIndexOf('.'))}`;
+                    name = `${useoptions.prefix}${resolvePath.substring(resolvePath.lastIndexOf(path.sep) + 1, resolvePath.lastIndexOf('.'))}`;
                 }
                 return {
                     path: resolvePath,
@@ -45,14 +45,14 @@ class Generator {
                     extension: path.extname(filepath)
                 };
             });
-            if (!fs.existsSync(options.out) && options.out !== '') {
-                fs.mkdirSync(options.out);
+            if (!fs.existsSync(useoptions.out) && useoptions.out !== '') {
+                fs.mkdirSync(useoptions.out);
             }
             files = yield this.readFiles(files);
-            yield this.getImagesSizes(files, options);
-            yield this.determineCanvasSize(files, options);
-            yield this.generateImage(files, options);
-            yield this.generateData(files, options);
+            yield this.getImagesSizes(files, useoptions);
+            yield this.determineCanvasSize(files, useoptions);
+            yield this.generateImage(files, useoptions);
+            yield this.generateData(files, useoptions);
             console.log('√ Spritesheet successfully generated.'.green);
         });
     }
