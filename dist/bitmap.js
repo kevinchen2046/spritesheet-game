@@ -110,6 +110,28 @@ class Bitmap extends pngjs_1.PNG {
         this.data[idx + 2] = pixel.b;
         this.data[idx + 3] = pixel.a;
     }
+    scale(v) {
+        return this.resize((this.width * v) >> 0, (this.height * v) >> 0);
+    }
+    resize(width, height) {
+        let scaleX = (this.width / width);
+        let scaleY = (this.height / height);
+        var dst = new Bitmap(width, height);
+        for (let b = 0; b < height; b++) {
+            let y = (b * scaleY) >> 0;
+            for (let a = 0; a < width; a++) {
+                let x = (a * scaleX) >> 0;
+                var i = (this.width * y + x) << 2;
+                var j = (width * b + a) << 2;
+                dst.data[j] = this.data[i];
+                dst.data[j + 1] = this.data[i + 1];
+                dst.data[j + 2] = this.data[i + 2];
+                dst.data[j + 3] = this.data[i + 3];
+            }
+        }
+        dst.__hash = hasher.hash(dst.data);
+        return dst;
+    }
     draw(source, sourceRect, destPoint, padding, pixeledge) {
         let dstx = destPoint.x + padding;
         let dsty = destPoint.y + padding;

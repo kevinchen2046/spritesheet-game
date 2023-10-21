@@ -1,0 +1,292 @@
+[
+    {
+        "name": "format",
+        "symbol": "f",
+        "type": "string",
+        "default": "json",
+        "desc": {
+            "en": [
+                "format of spritesheet.",
+                "    json, jsonarray , phaser, cocos2d , cocos2d-v3 , pixi.js",
+                "    easel.js , laya , egret , yaml , zebkit , starling , sparrow , css"
+            ],
+            "cn": [
+                "图集格式",
+                "    json, jsonarray , phaser, cocos2d , cocos2d-v3 , pixi.js",
+                "    easel.js , laya , egret , yaml , zebkit , starling , sparrow , css"
+            ],
+            "style": [
+                "grey",
+                "yellow",
+                "yellow"
+            ]
+        }
+    },
+    {
+        "name": "algorithm",
+        "symbol": "a",
+        "type": "number",
+        "default": 0,
+        "desc": {
+            "en": [
+                "packing algorithm:",
+                "    * 0 growing-binpacking (default)",
+                "    * 1 binpacking (requires passing --width and --height options)",
+                "    * 2 vertical",
+                "    * 3 horizontal"
+            ],
+            "cn": [
+                "装箱算法:",
+                "    * 0 growing-binpacking (default)",
+                "    * 1 binpacking (requires passing --width and --height options)",
+                "    * 2 vertical",
+                "    * 3 horizontal"
+            ],
+            "style": [
+                "grey",
+                "yellow",
+                "yellow",
+                "yellow",
+                "yellow"
+            ]
+        }
+    },
+    {
+        "name": "sort",
+        "symbol": "",
+        "type": "string",
+        "default": "maxside",
+        "desc": {
+            "en": [
+                "Sort method:",
+                "    maxside(default)",
+                "    area",
+                "    width",
+                "    height"
+            ],
+            "cn": [
+                "排序方式：",
+                "    maxside(默认)",
+                "    area",
+                "    width",
+                "    height"
+            ],
+            "style": [
+                "grey",
+                "yellow",
+                "yellow",
+                "yellow",
+                "yellow"
+            ]
+        }
+    },
+    {
+        "name": "custom",
+        "symbol": "c",
+        "type": "string",
+        "default": "",
+        "desc": {
+            "en": "path to external format template,if you specify --customFormat,then ignore --format",
+            "cn": "外部格式模板的路径 (如果指定--customFormat，则忽略--format)",
+            "style": "grey"
+        }
+    },
+    {
+        "name": "name",
+        "symbol": "n",
+        "type": "string",
+        "default": "",
+        "desc": {
+            "en": "name of generated spritesheet",
+            "cn": "图集名称",
+            "style": "grey"
+        }
+    },
+    {
+        "name": "padding",
+        "symbol": "p",
+        "type": "number",
+        "default": 1,
+        "desc": {
+            "en": "padding between images in spritesheet",
+            "cn": "图像间的间隔",
+            "style": "grey"
+        }
+    },
+    {
+        "name": "edge",
+        "symbol": "e",
+        "type": "number",
+        "default": 0,
+        "desc": {
+            "en": "Pixel edge extension (it's useful when use tiling that need fixed the gap problem)",
+            "cn": "像素边缘文本 (当使用需要修复间隙问题的平铺时很有用)",
+            "style": "grey"
+        }
+    },
+    {
+        "name": "out",
+        "symbol": "o",
+        "type": "string",
+        "default": "./",
+        "desc": {
+            "en": "path to export directory",
+            "cn": "导出目录",
+            "style": "grey"
+        }
+    },
+    {
+        "name": "trim",
+        "symbol": "t",
+        "type": "boolean",
+        "default": false,
+        "desc": {
+            "en": "removes transparent whitespaces around images",
+            "cn": "删除图像周围的透明空白区域",
+            "style": "grey"
+        }
+    },
+    {
+        "name": "scale",
+        "symbol": "s",
+        "type": "number",
+        "default": 1,
+        "desc": {
+            "en": "Reduce to specified scale",
+            "cn": "缩小到指定比例",
+            "style": "grey"
+        }
+    },
+    {
+        "name": "width",
+        "symbol": "w",
+        "type": "number",
+        "default": 0,
+        "desc": {
+            "en": "width for binpacking",
+            "cn": "固定图集宽度",
+            "style": "grey"
+        }
+    },
+    {
+        "name": "height",
+        "symbol": "h",
+        "type": "number",
+        "default": 0,
+        "desc": {
+            "en": "height for binpacking",
+            "cn": "固定图集高度",
+            "style": "grey"
+        }
+    },
+    {
+        "name": "extension",
+        "symbol": "",
+        "type": "string",
+        "default": "",
+        "desc": {
+            "en": "specify file extension",
+            "cn": "指定文件扩展名",
+            "style": "grey"
+        }
+    },
+    {
+        "name": "fullpath",
+        "symbol": "",
+        "type": "boolean",
+        "default": false,
+        "desc": {
+            "en": "include path in file name",
+            "cn": "在文件名中包含路径",
+            "style": "grey"
+        }
+    },
+    {
+        "name": "prefix",
+        "symbol": "",
+        "type": "string",
+        "default": "",
+        "desc": {
+            "en": "prefix for image paths",
+            "cn": "图像路径的前缀",
+            "style": "grey"
+        }
+    },
+    {
+        "name": "square",
+        "symbol": "",
+        "type": "boolean",
+        "default": false,
+        "desc": {
+            "en": "texture should be square",
+            "cn": "纹理应为正方形",
+            "style": "grey"
+        }
+    },
+    {
+        "name": "powerOfTwo",
+        "symbol": "",
+        "type": "boolean",
+        "default": false,
+        "desc": {
+            "en": "texture width and height should be power of two",
+            "cn": "纹理宽度和高度应该是二的幂",
+            "style": "grey"
+        }
+    },
+    {
+        "name": "validate",
+        "symbol": "",
+        "type": "boolean",
+        "default": false,
+        "desc": {
+            "en": "check algorithm returned data",
+            "cn": "检查算法返回的数据",
+            "style": "grey"
+        }
+    },
+    {
+        "name": "divisibleByTwo",
+        "symbol": "",
+        "type": "boolean",
+        "default": false,
+        "desc": {
+            "en": "every generated frame coordinates should be divisible by two",
+            "cn": "每个生成的帧坐标都应该可以被二整除",
+            "style": "grey"
+        }
+    },
+    {
+        "name": "cssOrder",
+        "symbol": "",
+        "type": "string",
+        "default": "",
+        "desc": {
+            "en": "specify the exact order of generated css class names",
+            "cn": "指定生成的css类名的确切顺序",
+            "style": "grey"
+        }
+    },
+    {
+        "name": "breakup",
+        "symbol": "",
+        "type": "boolean",
+        "default": false,
+        "desc": {
+            "en": "To break up the atlas, first you need to specify the format.",
+            "cn": "分解图集(首先需要指定格式)",
+            "style": "grey"
+        }
+    },
+    {
+        "name": "optqueue",
+        "symbol": "",
+        "type": "string",
+        "default": "1-0",
+        "desc": {
+            "en": "(interval,count) optimization sequence(Skip the specified number of files at regular intervals).",
+            "cn": "优化序列 (interval,count) （按照指定间隔跳过指定数量的文件）",
+            "style": "grey"
+        }
+    }
+]

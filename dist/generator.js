@@ -48,7 +48,7 @@ class Generator {
             if (!fs.existsSync(useoptions.out) && useoptions.out !== '') {
                 fs.mkdirSync(useoptions.out);
             }
-            files = yield this.readFiles(files);
+            files = yield this.readFiles(files, useoptions);
             yield this.getImagesSizes(files, useoptions);
             yield this.determineCanvasSize(files, useoptions);
             yield this.generateImage(files, useoptions);
@@ -100,11 +100,19 @@ class Generator {
         }
         return rect;
     }
-    readFiles(files) {
+    readFiles(files, userOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             let result = [];
             for (let file of files) {
                 let bitmap = yield bitmap_1.Bitmap.fromURL(file.path);
+                if (userOptions.scale != undefined && userOptions.scale != 1) {
+                    if (Array.isArray(bitmap)) {
+                        bitmap = bitmap.map(v => v.scale(userOptions.scale));
+                    }
+                    else {
+                        bitmap = bitmap.scale(userOptions.scale);
+                    }
+                }
                 if (Array.isArray(bitmap)) {
                     result.push(...bitmap.map((v, i) => Object.assign({}, file, { name: `${file.name}_${i}`, bitmap: v })));
                 }
@@ -112,7 +120,14 @@ class Generator {
                     result.push(Object.assign(file, { bitmap: bitmap }));
                 }
             }
-            return result;
+            let interval = userOptions.optqueue[0];
+            let skip = userOptions.optqueue[1];
+            let result1 = [];
+            for (let i = 0; i < result.length; i += interval) {
+                result1.push(result[i]);
+                i += skip;
+            }
+            return result1;
         });
     }
     getImagesSizes(files, options) {

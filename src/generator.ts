@@ -15,19 +15,17 @@ import packing, { TypeAlgorithms } from "./packing";
 import sorter from "./sorter";
 import { FORMATS, FormatInfo } from "./format";
 import * as colors from "colors";
-import { FileInfo, Options, OptionsUse, TrimRect } from "./const";
+import { EXTS, FileInfo, OptionsUse, TrimRect } from "./const";
 import { Util } from "./util";
-
-
 
 export class Generator {
 
-	public async execUsePattern(filesOrPatterns: string, options: Options) {
+	public async execUsePattern(filesOrPatterns: string, options: any) {
 		let files = Util.pickfiles(filesOrPatterns);
 		this.exec(files, options);
 	}
 
-	public async exec(filePaths: string[], options: Options) {
+	public async exec(filePaths: string[], options: any) {
 		if (!filePaths || filePaths.length == 0) {
 			throw new Error('no files specified');
 		}
@@ -51,7 +49,8 @@ export class Generator {
 			fs.mkdirSync(useoptions.out);
 		}
 
-		files = await this.readFiles(files);
+
+		files = await this.readFiles(files, useoptions);
 		await this.getImagesSizes(files, useoptions);
 		await this.determineCanvasSize(files, useoptions);
 		await this.generateImage(files, useoptions);
@@ -114,17 +113,31 @@ export class Generator {
 	/** 
 	 * 读取PNG图片
 	 */
-	async readFiles(files: { path: string, name: string, extension: string }[]) {
+	async readFiles(files: { path: string, name: string, extension: string }[], userOptions: OptionsUse) {
 		let result = [];
 		for (let file of files) {
 			let bitmap = await Bitmap.fromURL(file.path);
+			if (userOptions.scale != undefined && userOptions.scale != 1) {
+				if (Array.isArray(bitmap)) {
+					bitmap = bitmap.map(v => v.scale(userOptions.scale));
+				} else {
+					bitmap = bitmap.scale(userOptions.scale);
+				}
+			}
 			if (Array.isArray(bitmap)) {
 				result.push(...bitmap.map((v, i) => Object.assign({}, file, { name: `${file.name}_${i}`, bitmap: v })))
 			} else {
 				result.push(Object.assign(file, { bitmap: bitmap }))
 			}
 		}
-		return result;
+		let interval = userOptions.optqueue[0];
+		let skip = userOptions.optqueue[1];
+		let result1 = [];
+		for (let i = 0; i < result.length; i += interval) {
+			result1.push(result[i]);
+			i += skip;
+		}
+		return result1;
 	}
 
 	/**

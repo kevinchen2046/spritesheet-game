@@ -1,6 +1,6 @@
 
 import { Bitmap } from "./bitmap";
-import  { TypeAlgorithms } from "./packing";
+import { TypeAlgorithms } from "./packing";
 import { FORMATS, FormatInfo } from "./format";
 
 export type TrimRect = {
@@ -59,27 +59,27 @@ export type FileInfo = {
 	isLast?: boolean
 };
 
-export type Options = {
-	format?: string,
-	name?: string,
-	out?: string,
-	fullpath?: boolean,
-	square?: boolean,
-	powerOfTwo?: boolean,
-	scale?:string,
-	/**像素边缘扩展 */
-	edge?: string,
-	extension?: string,
-	trim?: string,
-	algorithm?: string
-	sort?: string,
-	padding?: string,
-	prefix?: string,
-	divisibleByTwo?: boolean,
-	cssOrder?: string,
-	width?: string, height?: string,
-	custom?: string
-}
+// export type Options = {
+// 	format?: string,
+// 	name?: string,
+// 	out?: string,
+// 	fullpath?: boolean,
+// 	square?: boolean,
+// 	powerOfTwo?: boolean,
+// 	scale?:string,
+// 	/**像素边缘扩展 */
+// 	edge?: string,
+// 	extension?: string,
+// 	trim?: string,
+// 	algorithm?: string
+// 	sort?: string,
+// 	padding?: string,
+// 	prefix?: string,
+// 	divisibleByTwo?: boolean,
+// 	cssOrder?: string,
+// 	width?: string, height?: string,
+// 	custom?: string
+// }
 
 export type OptionsUse = {
 	format?: FormatInfo,
@@ -88,7 +88,7 @@ export type OptionsUse = {
 	fullpath?: boolean,
 	square?: boolean,
 	powerOfTwo?: boolean,
-	scale?:number,
+	scale?: number,
 	/**像素边缘扩展 */
 	edge?: number,
 	extension?: string,
@@ -99,6 +99,7 @@ export type OptionsUse = {
 	prefix?: string,
 	divisibleByTwo?: boolean,
 	cssOrder?: string,
+	optqueue: number[],
 	/** */
 	width?: number,
 	height?: number,

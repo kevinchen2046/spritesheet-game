@@ -4,7 +4,6 @@ exports.Util = void 0;
 const fs = require("fs");
 const path = require("path");
 const glob = require("glob");
-const packing_1 = require("./packing");
 const format_1 = require("./format");
 const const_1 = require("./const");
 class Util {
@@ -44,7 +43,7 @@ class Util {
     }
     static parseOptions(options) {
         options = options || {};
-        let useOptions = {};
+        let useOptions = Object.assign({}, options);
         if (options.custom) {
             if (fs.existsSync(options.custom)) {
                 useOptions.format = { template: fs.readFileSync(options.custom, "utf-8"), extension: path.extname(options.custom) };
@@ -59,20 +58,8 @@ class Util {
         }
         useOptions.format.template = fs.readFileSync(fpath, "utf-8");
         useOptions.name = options.name || 'spritesheet';
-        useOptions.out = path.resolve(options.out || '.');
-        useOptions.fullpath = options.hasOwnProperty('fullpath') ? options.fullpath : false;
-        useOptions.square = options.hasOwnProperty('square') ? options.square : false;
-        useOptions.powerOfTwo = options.hasOwnProperty('powerOfTwo') ? options.powerOfTwo : false;
-        useOptions.scale = options.hasOwnProperty('scale') ? parseFloat(options.scale) : 1;
-        useOptions.edge = options.hasOwnProperty('edge') ? parseInt(options.edge) : 0;
-        useOptions.extension = options.hasOwnProperty('extension') ? options.extension : undefined;
-        useOptions.trim = options.hasOwnProperty('trim') ? options.trim == "true" : useOptions.format.trim;
-        useOptions.algorithm = (options.hasOwnProperty('algorithm') ? options.algorithm : packing_1.TypeAlgorithms.growingBinpacking);
-        useOptions.sort = options.hasOwnProperty('sort') ? options.sort : 'maxside';
-        useOptions.padding = options.hasOwnProperty('padding') ? parseInt(options.padding) : 2;
-        useOptions.prefix = options.hasOwnProperty('prefix') ? options.prefix : '';
-        useOptions.divisibleByTwo = options.hasOwnProperty('divisibleByTwo') ? options.divisibleByTwo : false;
-        useOptions.cssOrder = options.hasOwnProperty('cssOrder') ? options.cssOrder : null;
+        useOptions.out = path.resolve(options.out);
+        useOptions.optqueue = options.optqueue.split("-").map(v => parseInt(v));
         useOptions.padding += useOptions.edge;
         return useOptions;
     }

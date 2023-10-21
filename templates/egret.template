@@ -8,8 +8,8 @@
 			"y":{{y}},
 			"w":{{width}},
 			"h":{{height}},
-			"offX": 0,
-			"offY": 0,
+			"offX": {{trim.x}},
+			"offY": {{trim.y}},
 			"sourceW": {{originalwidth}},
 			"sourceH": {{originalheight}}
 		}{{^isLast}},{{/isLast}}

@@ -3,7 +3,7 @@ import * as jpegjs from 'jpeg-js';
 import { PNG } from "pngjs";
 import * as fs from "fs";
 import * as path from "path";
-import * as hash  from "node-object-hash";
+import * as hash from "node-object-hash";
 let hasher = (hash as any)({ coerce: { set: true, symbol: true } });
 export type Rect = { x: number, y: number, width: number, height: number }
 export type Point = { x: number, y: number }
@@ -110,7 +110,33 @@ export class Bitmap extends PNG {
         this.data[idx + 3] = pixel.a;
     }
 
-  
+    scale(v) {
+        return this.resize((this.width * v)>>0, (this.height * v)>>0);
+    }
+
+    resize(width, height) {
+
+        let scaleX = (this.width / width);
+        let scaleY = (this.height / height);
+        var dst = new Bitmap(width, height);
+        for (let b = 0; b < height; b++) {
+            let y = (b * scaleY) >> 0;
+            for (let a = 0; a < width; a++) {
+                let x = (a * scaleX) >> 0;
+                var i = (this.width * y + x) << 2;
+                var j = (width * b + a) << 2;
+                dst.data[j] = this.data[i];
+                dst.data[j + 1] = this.data[i + 1];
+                dst.data[j + 2] = this.data[i + 2];
+                dst.data[j + 3] = this.data[i + 3];
+            }
+        }
+        // this.destroy();
+        dst.__hash = hasher.hash(dst.data);
+        return dst;
+    }
+
+
     draw(source: Bitmap, sourceRect: Rect, destPoint: Point, padding: number, pixeledge: number) {
         let dstx = destPoint.x + padding;
         let dsty = destPoint.y + padding;
