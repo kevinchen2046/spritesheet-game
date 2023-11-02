@@ -1,4 +1,22 @@
 [
+    
+    {
+        "name": "ignore",
+        "symbol": "i",
+        "type": "string",
+        "default": "",
+        "desc": {
+            "en": [
+                "use glob to ignore files "
+            ],
+            "cn": [
+                "需要忽略的文件"
+            ],
+            "style": [
+                "grey"
+            ]
+        }
+    },
     {
         "name": "format",
         "symbol": "f",

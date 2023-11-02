@@ -3,6 +3,7 @@ const options = require("../options.json");
 const { program, Argument } = require('commander');
 require('colors');
 const { env } = require("process");
+const { type } = require("os");
 program.usage("inputfolder [options]").addArgument(new Argument('[string]', `folder path or pattern of ${'glob'.green}`.grey));
 function getEnvLocale(env) {
     env = env || process.env;
@@ -42,7 +43,25 @@ if (program.args.length == 0) {
     return;
 }
 let opts = program.opts();
-// console.log(opts);
+
+//将选项的值强转成设定的类型
+for (let name in opts) {
+    let option = options.find(v => v.name == name);
+    if (typeof opts[name] != option.type) {
+        switch (option.type) {
+            case "number":
+                opts[name] = Number(opts[name]);
+                break;
+            case "boolean":
+                opts[name] = Boolean(opts[name]);
+                break;
+            case "string":
+                opts[name] = opts[name] + '';
+                break;
+        }
+    }
+}
+
 if (opts.breakup) {
     const { BreakUp } = require("../dist/breakup");
     new BreakUp().exec(program.args[0], opts);

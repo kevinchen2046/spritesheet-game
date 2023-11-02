@@ -21,7 +21,7 @@ import { Util } from "./util";
 export class Generator {
 
 	public async execUsePattern(filesOrPatterns: string, options: any) {
-		let files = Util.pickfiles(filesOrPatterns);
+		let files = Util.pickfiles(filesOrPatterns,options.ignore);
 		this.exec(files, options);
 	}
 
@@ -162,9 +162,11 @@ export class Generator {
 			file.height = file.bitmap.height + options.padding * 2;
 			file.outarea = file.width * file.height;
 			file.trimmed = false;
-
+			
+			file.trim ={x:0,y:0,width:file.bitmap.width,height:file.bitmap.height}
 			if (options.trim) {
 				file.trim = this.__getTrimRect(file.bitmap);
+
 				file.trimmed = forceTrimmed || (file.trim.width !== file.originalwidth || file.trim.height !== file.originalheight);
 
 				file.width = file.trim.width + options.padding * 2;
@@ -272,15 +274,16 @@ export class Generator {
 
 		// sort files based on the choosen options.sort method
 		sorter(options.sort, files);
-
+		let padding=Number(options.padding);
 		options.files = files;
 		options.files.forEach(function (item, i) {
 			item.spritesheetWidth = options.width;
 			item.spritesheetHeight = options.height;
-			item.width -= options.padding * 2;
-			item.height -= options.padding * 2;
-			item.x += options.padding;
-			item.y += options.padding;
+			item.width -= padding * 2;
+			item.height -= padding * 2;
+			item.x += padding;
+			item.y += padding;
+
 			item.offsetX = 0;
 			item.offsetY = 0;
 			item.frameX = 0;

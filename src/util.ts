@@ -6,31 +6,34 @@ import { FORMATS, FormatInfo } from "./format";
 import { EXTS, OptionsUse } from "./const";
 
 export class Util {
-	static pickfiles(folderOrPattern: string) {
-		let patterns = [];
+	static pickfiles(folderOrPattern: string, ignorePattern: string) {
+		let paths = [];
 		if (folderOrPattern.charAt(0) == "[" && folderOrPattern.charAt(folderOrPattern.length - 1) == "]") {
 			folderOrPattern = folderOrPattern.substring(1, folderOrPattern.length - 1);
 		}
 		if (folderOrPattern.indexOf(",") >= 0) {
-			patterns = folderOrPattern.split(",");
+			paths = folderOrPattern.split(",");
 		} else {
-			patterns = [folderOrPattern];
+			paths = [folderOrPattern];
 		}
-		patterns = patterns.filter(v => !!v);
+		paths = paths.filter(v => !!v);
+		let patterns = [];
+		for (let pathpattern of paths) {
+			if (!!path.extname(pathpattern)) {
+				patterns.push(pathpattern);
+				continue;
+			}
+			if (fs.existsSync(pathpattern)) {
+				patterns.push(...EXTS.map(v => `${pathpattern}/**/*.${v}`));
+			}
+		}
 		let results = [];
 		patterns.forEach(pattern => {
-			if (!!path.extname(pattern)) {
-				if (fs.existsSync(pattern)) {
-					results.push(pattern)
-					return;
-				}
-				results.push(...glob.sync(pattern));
+			if (fs.existsSync(pattern)) {
+				results.push(pattern)
 				return;
 			}
-			if (fs.existsSync(pattern)) {
-				let files = fs.readdirSync(pattern);
-				results.push(...files.map(v => `${pattern}/${v}`));
-			}
+			results.push(...glob.sync(pattern, { ignore: ignorePattern }));
 		});
 		if (results.length == folderOrPattern.length) {
 			if (!results.every(v => !!EXTS.find(ext => ext == path.extname(v)))) {

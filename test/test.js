@@ -18,10 +18,15 @@
 
 // console.log(output);
 
+let glob = require("glob");
 
+// let Generator = require('./index');
 
-let Generator = require('./index');
-
-new Generator().exec('./test/images/', { format: 'laya', trim: true, padding: 2,out:"./test" }).then(() => {
-    console.log('spritesheet successfully generated');
-});
+// new Generator().exec('./test/images/', { format: 'laya', trim: true, padding: 2,out:"./test" }).then(() => {
+//     console.log('spritesheet successfully generated');
+// });
+let pattern = ["./test/images/"];
+pattern.reduce((prev, current, i, array) => {
+    
+})
+console.log(glob.sync("./test/images/", { ignore: "" }))
