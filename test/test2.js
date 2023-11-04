@@ -9,5 +9,6 @@ generator.exec("./test/images/", {
     edge: 50,
     out: "./test",
     format: "laya",
-    custom:"templates/11.template"
+    custom:"templates/11.template",
+    edge:10
 });

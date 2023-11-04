@@ -26,7 +26,7 @@ class Util {
                 continue;
             }
             if (fs.existsSync(pathpattern)) {
-                patterns.push(...const_1.EXTS.map(v => `${pathpattern}/**/*.${v}`));
+                patterns.push(...const_1.EXTS.map(v => `${pathpattern}/**/*${v}`));
             }
         }
         let results = [];
