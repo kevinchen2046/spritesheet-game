@@ -64,7 +64,10 @@ class BreakUp {
                         let frame = config.res[name];
                         let tile = new bitmap_1.Bitmap(frame.sourceW, frame.sourceH);
                         tile.draw(bitmap, { x: frame.x, y: frame.y, width: frame.w, height: frame.h }, { x: frame.offX, y: frame.offY }, 0, 0);
-                        tile.save(`${folder}/${name}`);
+                        let ext = path.extname(name);
+                        if (!ext)
+                            ext = ".png";
+                        tile.save(`${folder}/${name}${ext}`);
                     }
                     break;
                 case "egret":
