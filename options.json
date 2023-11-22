@@ -138,7 +138,7 @@
         "default": 0,
         "desc": {
             "en": "Pixel edge extension (it's useful when use tiling that need fixed the gap problem)",
-            "cn": "像素边缘文本 (当使用需要修复间隙问题的平铺时很有用)",
+            "cn": "像素边缘扩展 (当使用需要修复间隙问题的平铺时很有用)",
             "style": "grey"
         }
     },

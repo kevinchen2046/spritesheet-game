@@ -14,10 +14,13 @@ export class BreakUp {
             return;
         }
         let format = FORMATS[options.format];
-        let folder = "./"+path.basename(file).replace(path.extname(file),"");
+        file=path.resolve(file);
+        let filename=path.basename(file)
+        let folder = path.resolve(file.replace(filename,""),filename.replace(path.extname(filename),""));
         if (options.out && options.out != "./") {
             folder = options.out;
         }
+
         let alast = null;
         let png = null;
         if (path.extname(file) == `.${format.extension}`) {
@@ -38,6 +41,7 @@ export class BreakUp {
         let bitmap = await Bitmap.fromPng(png);
         let config = await this.readConfig(alast);
         if(!fs.existsSync(folder)) fs.mkdirSync(folder);
+        
         switch (options.format) {
             case "egret-mc":
                 if(!config.res){
@@ -60,8 +64,11 @@ export class BreakUp {
                     let frame = config.frames[name];
                     let tile = new Bitmap(frame.sourceW, frame.sourceH);
                     tile.draw(bitmap, { x: frame.x, y: frame.y, width: frame.w, height: frame.h }, { x: frame.offX, y: frame.offY }, 0, 0);
-                    tile.save(`${folder}/${name}`);
+                    let ext=path.extname(name);
+                    if(!ext) ext=".png";
+                    tile.save(`${folder}/${name}${ext}`);
                 }
+                console.log(`[✔] The image segmented from the spritesheet is located at: `.green+`${folder}`.blue);
                 break;
         }
     }
