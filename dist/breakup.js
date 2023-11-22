@@ -84,9 +84,9 @@ class BreakUp {
                             ext = ".png";
                         tile.save(`${folder}/${name}${ext}`);
                     }
-                    console.log(`[✔] The image segmented from the spritesheet is located at: `.green + `${folder}`.blue);
                     break;
             }
+            console.log(`[✔] The image segmented from the spritesheet is located at: `.green + `${folder}`.blue);
         });
     }
     readConfig(url) {
