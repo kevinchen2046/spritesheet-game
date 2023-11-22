@@ -1,6 +1,6 @@
 {
   "name": "spritesheet-game",
-  "version": "1.4.5",
+  "version": "1.4.7",
   "description": "atlas packaging tool of game engine.spritesheet generator of support most engine.",
   "main": "index.js",
   "scripts": {

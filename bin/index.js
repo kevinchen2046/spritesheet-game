@@ -27,6 +27,9 @@ for (let opt of options) {
     // console.log(flags,desc,options.default);
     program.option(flags, desc, opt.default);
 }
+program.option("-v --version",undefined,()=>{
+    console.log(`当前版本: ${require("../package.json").version}`.green);
+})
 program.action(function () {
     const options = program.opts();
     if (options.algorithm !== 'binpacking' || !isNaN(Number(options.width)) && !isNaN(Number(options.height))) {
