@@ -39,13 +39,25 @@ export class BreakUp {
         let config = await this.readConfig(alast);
         if(!fs.existsSync(folder)) fs.mkdirSync(folder);
         switch (options.format) {
-            case "egret":
+            case "egret-mc":
                 if(!config.res){
                     console.error(`无效的${options.format}格式!`);
                     return;
                 }
                 for (let name in config.res) {
                     let frame = config.res[name];
+                    let tile = new Bitmap(frame.sourceW, frame.sourceH);
+                    tile.draw(bitmap, { x: frame.x, y: frame.y, width: frame.w, height: frame.h }, { x: frame.offX, y: frame.offY }, 0, 0);
+                    tile.save(`${folder}/${name}`);
+                }
+                break;
+            case "egret":
+                if(!config.frames){
+                    console.error(`无效的${options.format}格式!`);
+                    return;
+                }
+                for (let name in config.frames) {
+                    let frame = config.frames[name];
                     let tile = new Bitmap(frame.sourceW, frame.sourceH);
                     tile.draw(bitmap, { x: frame.x, y: frame.y, width: frame.w, height: frame.h }, { x: frame.offX, y: frame.offY }, 0, 0);
                     tile.save(`${folder}/${name}`);
