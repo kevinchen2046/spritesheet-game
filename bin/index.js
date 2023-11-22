@@ -10,7 +10,7 @@ function getEnvLocale(env) {
     return env.LC_ALL || env.LC_MESSAGES || env.LANG || env.LANGUAGE;
 }
 const lang = getEnvLocale(env);
-const isChinese = lang.indexOf("zh_CN") >= 0;
+const isChinese = lang&&lang.indexOf("zh_CN") >= 0;
 for (let opt of options) {
     let flags = `${opt.symbol ? (`-${opt.symbol}, `) : ""}--${opt.name} <${opt.type}>`;
     let desctexts = isChinese ? opt.desc.cn : opt.desc.en;

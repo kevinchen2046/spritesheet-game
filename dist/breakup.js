@@ -26,8 +26,8 @@ class BreakUp {
                 return;
             }
             let format = format_1.FORMATS[options.format];
-            let folder = path.dirname(file);
-            if (options.out && options.out != ".") {
+            let folder = "./" + path.basename(file).replace(path.extname(file), "");
+            if (options.out && options.out != "./") {
                 folder = options.out;
             }
             let alast = null;
@@ -40,10 +40,24 @@ class BreakUp {
                 png = file;
                 alast = file.replace(path.extname(file), `.${format.extension}`);
             }
+            if (!fs.existsSync(png)) {
+                console.error("未找到源图像...");
+                return;
+            }
+            if (!fs.existsSync(alast)) {
+                console.error("未找到配置...");
+                return;
+            }
             let bitmap = yield bitmap_1.Bitmap.fromPng(png);
             let config = yield this.readConfig(alast);
+            if (!fs.existsSync(folder))
+                fs.mkdirSync(folder);
             switch (options.format) {
                 case "egret":
+                    if (!config.res) {
+                        console.error(`无效的${options.format}格式!`);
+                        return;
+                    }
                     for (let name in config.res) {
                         let frame = config.res[name];
                         let tile = new bitmap_1.Bitmap(frame.sourceW, frame.sourceH);
