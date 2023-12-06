@@ -11,7 +11,7 @@ exports.FORMATS = {
     'sparrow': { template: 'starling.template', extension: 'xml', trim: true },
     'easel.js': { template: 'easeljs.template', extension: 'json', trim: false },
     'egret': { template: 'egret.template', extension: 'json', trim: false },
-    'egret-mc': { template: 'egret.template', extension: 'json', trim: false },
+    'egret-mc': { template: 'egret_mc.template', extension: 'json', trim: false },
     'laya': { template: 'laya.template', extension: 'atlas', trim: true },
     'zebkit': { template: 'zebkit.template', extension: 'js', trim: false },
     'cocos2d': { template: 'cocos2d.template', extension: 'plist', trim: true },

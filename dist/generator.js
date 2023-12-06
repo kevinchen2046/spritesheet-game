@@ -53,7 +53,7 @@ class Generator {
             yield this.determineCanvasSize(files, useoptions);
             yield this.generateImage(files, useoptions);
             yield this.generateData(files, useoptions);
-            console.log('√ Spritesheet successfully generated.'.green);
+            console.log(`√ Spritesheet[${options.format}] successfully generated.`.green);
         });
     }
     __getTrimRect(bitmap) {

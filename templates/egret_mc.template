@@ -1,0 +1,21 @@
+{
+	"file": "{{{name}}}.png",
+	"mc":{},
+	"res": {
+	{{#files}}
+		"{{{name}}}{{extension}}": {
+			"x":{{x}},
+			"y":{{y}},
+			"w":{{width}},
+			"h":{{height}},
+			"offX": {{trim.x}},
+			"offY": {{trim.y}},
+			"sourceW": {{originalwidth}},
+			"sourceH": {{originalheight}}
+		}{{^isLast}},{{/isLast}}
+	{{/files}}
+	},
+	"meta":{
+		"app": "https://github.com/kevinchen2046/spritesheet-game"
+	}
+}

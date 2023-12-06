@@ -1,7 +1,6 @@
 {
 	"file": "{{{name}}}.png",
-	"mc":{},
-	"res": {
+	"frames": {
 	{{#files}}
 		"{{{name}}}{{extension}}": {
 			"x":{{x}},

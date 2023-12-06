@@ -56,7 +56,7 @@ export class Generator {
 		await this.generateImage(files, useoptions);
 		await this.generateData(files, useoptions);
 
-		console.log('√ Spritesheet successfully generated.'.green);
+		console.log(`√ Spritesheet[${options.format}] successfully generated.`.green);
 	}
 
 
