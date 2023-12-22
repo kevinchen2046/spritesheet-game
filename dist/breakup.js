@@ -21,7 +21,7 @@ class BreakUp {
                 console.error("请输入源图集格式...", options.format);
                 return;
             }
-            if (!format_1.FORMATS[options.format]) {
+            if (options.format != "custom" && !format_1.FORMATS[options.format]) {
                 console.error("未知的源图集格式...", options.format);
                 return;
             }
@@ -32,9 +32,10 @@ class BreakUp {
             if (options.out && options.out != "./") {
                 folder = options.out;
             }
+            let fileext = path.extname(file);
             let alast = null;
             let png = null;
-            if (path.extname(file) == `.${format.extension}`) {
+            if (fileext == ".json" || fileext == `.${format.extension}`) {
                 alast = file;
                 png = file.replace(path.extname(file), ".png");
             }
@@ -67,39 +68,7 @@ class BreakUp {
                                 fs.mkdirSync(folder);
                         }
                         let mc = config.mc[mcname];
-                        let offsets = mc.frames.map(v => ({ x: v.x, y: v.y }));
-                        let first = Object.assign({}, offsets[0]);
-                        offsets.forEach(v => {
-                            v.x -= first.x;
-                            v.y -= first.y;
-                        });
-                        let frames = [];
-                        for (let i = 0; i < mc.frames.length; i++) {
-                            let frame = mc.frames[i];
-                            let offset = offsets[i];
-                            let res = config.res[frame.res];
-                            frames.push({ x: res.x, y: res.y, w: res.w, h: res.h, offX: offset.x, offY: offset.y });
-                        }
-                        let paddingX = 0;
-                        let paddingY = 0;
-                        for (let offset of offsets) {
-                            paddingX = Math.max(paddingX, Math.abs(offset.x) * 2);
-                            paddingY = Math.max(paddingY, Math.abs(offset.y) * 2);
-                        }
-                        let sourceW = 0;
-                        let sourceH = 0;
-                        for (let frame of frames) {
-                            sourceW = Math.max(sourceW, paddingX + frame.w);
-                            sourceH = Math.max(sourceH, paddingY + frame.h);
-                        }
-                        let index = 0;
-                        for (let frame of frames) {
-                            let tile = new bitmap_1.Bitmap(sourceW, sourceH);
-                            let dest = { x: paddingX / 2 + frame.offX, y: paddingY / 2 + frame.offY };
-                            tile.draw(bitmap, { x: frame.x, y: frame.y, width: frame.w, height: frame.h }, dest, 0, 0);
-                            let ext = ".png";
-                            tile.save(`${folder}/frame${++index}${ext}`);
-                        }
+                        this.breakfromNoSourceWH(bitmap, mc.frames, mc.res, folder);
                     }
                     break;
                 case "egret":
@@ -117,9 +86,65 @@ class BreakUp {
                         tile.save(`${folder}/${name}${ext}`);
                     }
                     break;
+                case "custom":
+                    if (!options.breakup) {
+                        console.error(`自定义打散请定义模板: -b frames_key,frameX_key,frameY_key,x_key,y_key,width_key,height_key`);
+                        return;
+                    }
+                    let [frames_key, frameX_key, frameY_key, x_key, y_key, width_key, height_key] = options.breakup.split(",");
+                    let sequence = config[frames_key];
+                    let source = {};
+                    let frames = [];
+                    for (let i = 0; i < sequence.length; i++) {
+                        let key = i;
+                        let v = sequence[i];
+                        source[key] = { x: v[x_key], y: v[y_key], w: v[width_key], h: v[height_key] };
+                        frames.push({ x: v[frameX_key], y: v[frameY_key], res: key });
+                    }
+                    let folderpath = folder.replace(path.extname(folder), "");
+                    if (!fs.existsSync(folderpath))
+                        fs.mkdirSync(folderpath);
+                    console.log(bitmap, folder);
+                    this.breakfromNoSourceWH(bitmap, frames, source, folderpath);
+                    break;
             }
             console.log(`[✔] The image segmented from the spritesheet is located at: `.green + `${folder}`.blue);
         });
+    }
+    breakfromNoSourceWH(bitmap, frames, source, outfolder) {
+        let offsets = frames.map(v => ({ x: v.x, y: v.y }));
+        let first = Object.assign({}, offsets[0]);
+        offsets.forEach(v => {
+            v.x -= first.x;
+            v.y -= first.y;
+        });
+        let sequence = [];
+        for (let i = 0; i < frames.length; i++) {
+            let frame = frames[i];
+            let offset = offsets[i];
+            let res = source[frame.res];
+            sequence.push({ x: res.x, y: res.y, w: res.w, h: res.h, offX: offset.x, offY: offset.y });
+        }
+        let paddingX = 0;
+        let paddingY = 0;
+        for (let offset of offsets) {
+            paddingX = Math.max(paddingX, Math.abs(offset.x) * 2);
+            paddingY = Math.max(paddingY, Math.abs(offset.y) * 2);
+        }
+        let sourceW = 0;
+        let sourceH = 0;
+        for (let frame of sequence) {
+            sourceW = Math.max(sourceW, paddingX + frame.w);
+            sourceH = Math.max(sourceH, paddingY + frame.h);
+        }
+        let index = 0;
+        for (let frame of sequence) {
+            let tile = new bitmap_1.Bitmap(sourceW, sourceH);
+            let dest = { x: paddingX / 2 + frame.offX, y: paddingY / 2 + frame.offY };
+            tile.draw(bitmap, { x: frame.x, y: frame.y, width: frame.w, height: frame.h }, dest, 0, 0);
+            let ext = ".png";
+            tile.save(`${outfolder}/frame${++index}${ext}`);
+        }
     }
     readConfig(url) {
         return __awaiter(this, void 0, void 0, function* () {

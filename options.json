@@ -288,8 +288,8 @@
     {
         "name": "breakup",
         "symbol": "",
-        "type": "boolean",
-        "default": false,
+        "type": "string",
+        "default": "",
         "desc": {
             "en": "To break up the atlas, first you need to specify the format.",
             "cn": "分解图集(首先需要指定格式)",
